@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/neuwhite"
+    tools:context=".MainActivity">
+
+<LinearLayout
+    android:id="@+id/main_linear_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:weightSum="7"
+   >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:text="Sign up"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"/>
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_account"/>
+
+
+    <soup.neumorphism.NeumorphCardView
+    style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        android:layout_margin="5dp"
+      >
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="UserName"
+            android:drawableLeft="@drawable/ic_account"
+            android:inputType="textPersonName"
+            android:textCursorDrawable="@drawable/cursor"
+            android:background="@android:color/transparent"
+            />
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        android:layout_margin="5dp"
+        app:neumorph_shapeType="pressed"
+        >
+
+        <EditText
+            android:id="@+id/tx1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:drawableLeft="@drawable/ic_lock"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@drawable/cursor"
+            android:background="@android:color/transparent"
+            />
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphCardView
+        style="@style/Widget.Neumorph.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
+        app:neumorph_shapeType="basin"
+        android:layout_margin="5dp"
+        >
+
+        <EditText
+            android:id="@+id/txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/ic_done_all"
+            android:textCursorDrawable="@drawable/cursor"
+            android:background="@android:color/transparent"
+            />
+    </soup.neumorphism.NeumorphCardView>
+    <soup.neumorphism.NeumorphButton
+        style="@style/Widget.Neumorph.Button"
+        android:id="@+id/btn_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:neumorph_shapeType="flat"
+        android:text="Sign Up"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        >
+
+
+    </soup.neumorphism.NeumorphButton>
+
+
+</LinearLayout>
+
+
+</RelativeLayout>
