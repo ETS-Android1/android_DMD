@@ -9,14 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diamon">
+        <activity android:name=".Account_Setting"></activity>
         <activity
             android:name=".DepositActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".SendActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PageMainActivity"
             android:screenOrientation="portrait" />
