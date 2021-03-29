@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item android:id="@+id/home"
+            android:title="home"
+            android:icon="@drawable/ic_home"/>
+
+        <item android:id="@+id/setting"
+            android:title="Setting"
+            android:icon="@drawable/ic_setting"/>
+
+
+        <item android:id="@+id/deposit"
+            android:title="Deposit"
+            android:icon="@drawable/ic_down">
+        </item>
+        <item android:id="@+id/send"
+            android:title="Send"
+            android:icon="@drawable/ic_send">
+        </item>
+        <item android:id="@+id/withdrawal"
+            android:title="withdrawal"
+            android:icon="@drawable/ic_wallet">
+        </item>
+        <item android:id="@+id/blp"
+            android:title="been local provider"
+            android:icon="@drawable/ic_local">
+        </item>
+        <item android:id="@+id/identity"
+            android:title="Identity"
+            android:icon="@drawable/ic_person">
+        </item>
+
+</menu>

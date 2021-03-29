@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PageMainActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/id_nav"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start"/>
+<LinearLayout
+  android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/neuwhite"
     android:orientation="vertical"
-    tools:context=".PageMainActivity"
-    android:weightSum="10">
+    android:weightSum="10"
+   >
 
     <LinearLayout
         android:id="@+id/linear"
@@ -23,13 +37,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             >
-        <ImageView
-            android:id="@+id/Button_menu"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_menu" />
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_menu" />
+
         </soup.neumorphism.NeumorphCardView>
 
 
@@ -174,3 +189,4 @@
     </soup.neumorphism.NeumorphCardView>
 
 </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
