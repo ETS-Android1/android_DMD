@@ -1,7 +1,11 @@
+
+
+
 plugins {
     id 'com.android.application'
-}
 
+}
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -40,5 +44,7 @@ dependencies {
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     compile 'com.jjoe64:graphview:4.2.1'
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
 }

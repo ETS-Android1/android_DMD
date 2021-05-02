@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "269268339223",
+    "project_id": "diamon-f6938",
+    "storage_bucket": "diamon-f6938.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269268339223:android:cb9d1920c39870029daa52",
+        "android_client_info": {
+          "package_name": "com.example.diamon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269268339223-098q95igt6bj8tish1bruvqsoms5evap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCr-_NipUyFiWCwGKrSl5c3EB4qawdhE8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269268339223-098q95igt6bj8tish1bruvqsoms5evap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
