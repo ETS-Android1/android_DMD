@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@color/neuwhite"
     android:weightSum="7"
-    tools:context=".DepositActivity">
+    tools:context=".Vue.DepositActivity">
 
 
 

@@ -8,7 +8,7 @@
     android:background="@color/neuwhite"
     android:orientation="vertical"
     android:weightSum="7"
-    tools:context=".SendActivity">
+    tools:context=".Vue.SendActivity">
 
 
     <soup.neumorphism.NeumorphCardView

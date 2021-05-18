@@ -9,24 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diamon">
-        <activity android:name=".withdrawalActivity"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".BlpActivity" />
+        <activity android:name=".Vue.withdrawalActivity"></activity>
+        <activity android:name=".Vue.ProfileActivity" />
+        <activity android:name=".Vue.BlpActivity" />
         <activity
-            android:name=".TransactionsActivity"
+            android:name=".Vue.TransactionsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Account_Setting" />
+        <activity android:name=".Vue.Account_Setting" />
         <activity
-            android:name=".DepositActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SendActivity"
+            android:name=".Vue.DepositActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PageMainActivity"
+            android:name=".Vue.SendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Vue.PageMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Vue.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,5 +35,6 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.diamon;
+package com.example.diamon.Vue;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import com.example.diamon.R;
 
 import java.util.ArrayList;
 

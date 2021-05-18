@@ -1,14 +1,14 @@
-package com.example.diamon;
+package com.example.diamon.Vue;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import com.example.diamon.R;
 
 public class MainActivity extends AppCompatActivity {
         private Button btn_sign_up;
