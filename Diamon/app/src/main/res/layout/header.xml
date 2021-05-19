@@ -13,7 +13,9 @@
         android:src="@drawable/ic_account"
         android:layout_width="75dp" />
 
-    <TextView android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/id_user_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="John Doe"
         android:textSize="20dp"/>

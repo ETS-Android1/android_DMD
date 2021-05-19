@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.diamon">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_mone_24"
@@ -9,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diamon">
-        <activity android:name=".Vue.withdrawalActivity"></activity>
+        <activity android:name=".Vue.GraphActivity"></activity>
+        <activity android:name=".Vue.RegisterActivity" />
+        <activity android:name=".Vue.withdrawalActivity" />
         <activity android:name=".Vue.ProfileActivity" />
         <activity android:name=".Vue.BlpActivity" />
         <activity
@@ -23,10 +27,13 @@
             android:name=".Vue.SendActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Vue.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Vue.PageMainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Vue.MainActivity"
+            android:name=".Vue.Splash"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +42,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
