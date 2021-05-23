@@ -10,76 +10,87 @@
     android:fitsSystemWindows="true">
    <!-- tools:openDrawer="start"-->
 
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/id_nav"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start"/>
-<LinearLayout
-  android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/neuwhite"
-    android:orientation="vertical"
-    android:weightSum="10"
-
-   >
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/id_nav"
+            app:headerLayout="@layout/header"
+            app:menu="@menu/main_menu"
+            android:layout_gravity="start"/>
 
     <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <soup.neumorphism.NeumorphCardView
-            style="@style/Widget.Neumorph.CardView"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-
-            >
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/neuwhite"
+            android:orientation="vertical"
+            android:weightSum="10">
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/border_set"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+     <!--   <soup.neumorphism.NeumorphCardView
+            style="@style/Widget.Neumorph.CardView"-->
+            <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_menu" />
+            </LinearLayout>
 
-        </soup.neumorphism.NeumorphCardView>
+            <LinearLayout
+            android:id="@+id/remplire"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.3"
+            android:orientation="horizontal"
+           ></LinearLayout>
 
+       <!-- <soup.neumorphism.NeumorphCardView
+            style="@style/Widget.Neumorph.CardView"-->
+            <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent">
 
-
-
-     <!--   <soup.neumorphism.NeumorphCardView
-            style="@style/Widget.Neumorph.CardView"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            >
-        <ImageView
+            <ImageView
             android:id="@+id/notif_cloch"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_notification"
            />
-        </soup.neumorphism.NeumorphCardView>
-        -->
-    </LinearLayout>
-
+            <TextView
+                android:id="@+id/id_notif_nb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginTop="5dp"
+                android:text="12"/>
+            </LinearLayout>
+        </LinearLayout>
+        <soup.neumorphism.NeumorphCardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            app:neumorph_shapeType="flat"
+            >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:gravity="center">
-    <androidx.cardview.widget.CardView
-        android:id="@+id/linear_prix"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="200dp">
+        android:orientation="horizontal"
+        android:background="@drawable/border_raduis_20"
+        android:gravity="center">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -87,63 +98,68 @@
             android:background="@color/neuwhite">
 
             <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Balance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/id_prix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:text="2000.125 XOF"
-                android:textSize="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="3dp"
+                android:text="$2000.125"
+                android:textSize="30dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.547"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
             <TextView
                 android:id="@+id/id_valeur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DMD=$ 0,0001"
-                android:textStyle="bold"
-                android:layout_marginStart="104dp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_graph"
-                app:layout_constraintEnd_toStartOf="@+id/id_taux"
-                app:layout_constraintHorizontal_bias="0.591"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="$0,0034"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/id_prix"
-                app:layout_constraintVertical_bias="0.595" />
+                app:layout_constraintTop_toBottomOf="@+id/id_prix" />
 
             <TextView
                 android:id="@+id/id_taux"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="90dp"
-
-                android:text="+12,8"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text=" +12,8%"
                 android:textColor="@color/vert1"
-                app:layout_constraintBottom_toTopOf="@+id/btn_graph"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/id_prix"
-                app:layout_constraintVertical_bias="0.595" />
+                android:textSize="15dp"
+                android:drawableLeft="@drawable/ic_trend_up"
+                app:layout_constraintStart_toEndOf="@+id/id_valeur"
+                app:layout_constraintTop_toBottomOf="@+id/id_prix" />
 
             <soup.neumorphism.NeumorphButton
                 android:id="@+id/btn_graph"
                 style="@style/Widget.Neumorph.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="44dp"
-                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
                 android:text="Graph"
-                android:textColor="@color/vert1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shapeType="basin" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
     </LinearLayout>
-    <!--
+    </soup.neumorphism.NeumorphCardView>
+        <!--
         <soup.neumorphism.NeumorphCardView
             style="@style/Widget.Neumorph.ImageView"
             android:id="@+id/imageView"
@@ -166,7 +182,7 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:id="@+id/graph"/>
-  </soup.neumorphism.NeumorphCardView>-->
+   </soup.neumorphism.NeumorphCardView>-->
 
     <LinearLayout
         android:id="@+id/sell_buy"
@@ -197,6 +213,15 @@
         android:text="Sell"
         android:layout_margin="5dp"
         android:textColor="@color/red1" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.7"
+        android:orientation="horizontal"
+        android:background="@drawable/border_raduis_top"
+        android:gravity="center">
 
     </LinearLayout>
 <!--

@@ -8,16 +8,19 @@
     android:layout_height="200dp"
     android:padding="10dp">
 
-    <ImageView
-        android:layout_height="75dp"
-        android:src="@drawable/ic_account"
-        android:layout_width="75dp" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profil_img"
+        android:layout_height="100dp"
+        android:src="@drawable/prof"
+        android:layout_width="100dp"
+       />
 
     <TextView
-        android:id="@+id/id_user_name"
+        android:id="@+id/id_user_pseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="John Doe"
         android:textSize="20dp"/>
+
 
 </LinearLayout>

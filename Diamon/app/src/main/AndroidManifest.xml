@@ -21,13 +21,13 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Vue.Account_Setting" />
         <activity
-            android:name=".Vue.DepositActivity"
+            android:name=".Vue.BuyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.SendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Vue.MainActivity"
+            android:name=".Vue.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.PageMainActivity"

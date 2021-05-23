@@ -9,7 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,9 +27,10 @@ import android.widget.Toolbar;
 
 import com.example.diamon.R;
 import com.google.android.material.navigation.NavigationView;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -47,9 +49,11 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView txt_user_name;
+    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur;
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
+    public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+    public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +71,15 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
      // toolbar = findViewById(R.id.toolbar);
         btn_sell = findViewById(R.id.btn_sell);
         btn_buy = findViewById(R.id.btn_buy);
-        txt_user_name = header.findViewById(R.id.id_user_name);
+        txt_user_pseudo = header.findViewById(R.id.id_user_pseudo);
+        txt_taux= findViewById(R.id.id_taux);
         /**
          * btn_buy
          */
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PageMainActivity.this, DepositActivity.class);
+                Intent intent = new Intent(PageMainActivity.this, BuyActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,19 +87,24 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         /**
          * btn_buy
          */
+
         btn_sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                select_user();
+                Drawable img = txt_taux.getContext().getResources().getDrawable( R.drawable.ic_trend_down );
+                txt_taux.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
+                txt_taux.setText(" -8%");
+                txt_taux.setTextColor(getResources().getColor(R.color.red1));
             }
         });
+
+
 
         Intent log_intent= getIntent();
         Bundle bundle = log_intent.getExtras();
         if(bundle!=null)
         {
-            String bundle_user_name =(String) bundle.get("pseudo");
-            txt_user_name.setText(bundle_user_name);
+            USER_PSEUDO =(String) bundle.get("pseudo");
         }
 
 
@@ -111,11 +121,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
         if(isConnectingToInternet(PageMainActivity.this))
         {
             Toast.makeText(getApplicationContext(),"internet is available",Toast.LENGTH_LONG).show();
+            select_user(USER_PSEUDO);
         }
         else {
             Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
@@ -166,6 +175,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);
             graph.addSeries(series);*/
+
         }
 
     // drawer menu function
@@ -190,13 +200,8 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 Toast.makeText(this,"home clicked",Toast.LENGTH_LONG).show();
                 break;
 
-            case R.id.setting:
-                Intent intent_tran = new Intent(PageMainActivity.this, TransactionsActivity.class);
-                startActivity(intent_tran);
-                break;
-
-            case R.id.deposit:
-                Intent intent_deposit = new Intent(PageMainActivity.this, DepositActivity.class);
+            case R.id.buy:
+                Intent intent_deposit = new Intent(PageMainActivity.this, BuyActivity.class);
                 startActivity(intent_deposit);
                 break;
 
@@ -209,15 +214,37 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 Intent intent_wi = new Intent(PageMainActivity.this, withdrawalActivity.class);
                 startActivity(intent_wi);
                 break;
+            case R.id.setting:
+                Intent intent_tran = new Intent(PageMainActivity.this, TransactionsActivity.class);
+                startActivity(intent_tran);
+                break;
 
             case R.id.blp:
                 Intent intent_blp = new Intent(PageMainActivity.this, BlpActivity.class);
                 startActivity(intent_blp);
                 break;
+            case R.id.profile:
+                Intent intent_profile = new Intent(PageMainActivity.this, ProfileActivity.class);
+                intent_profile.putExtra("user_name",USER_NAME);
+                intent_profile.putExtra("user_pseudo",USER_PSEUDO);
+                intent_profile.putExtra("user_account_id",USER_ACCOUNT_ID);
+                startActivity(intent_profile);
+                break;
 
-            case R.id.identity:
-                Intent intent_profil = new Intent(PageMainActivity.this, ProfileActivity.class);
-                startActivity(intent_profil);
+            case R.id.chat:
+                Toast.makeText(this,"chat clicked",Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.help:
+                Toast.makeText(this,"help clicked",Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.logout:
+                SharedPreferences preferences = getSharedPreferences("switch",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+                finish();
                 break;
 
         }
@@ -248,14 +275,13 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-    public void select_user() {
-
+    public void select_user(String user_pseudo) {
 
         // Initialize  AsyncLogin() class with email and password
         /**
         * valeur a envoyer vers le serveur
          */
-        new PageMainActivity.AsyncUser().execute("select_user");
+        new PageMainActivity.AsyncUser().execute("select_user",user_pseudo);
 
     }
 
@@ -276,15 +302,17 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             pdLoading.show();
 
         }
+
         @Override
         protected String doInBackground(String... params) {
             try {
 
                 // Enter URL address where your php file resides
-                url = new URL("http://192.168.1.120/dmd/dmd_work.php");
+                url = new URL(URL_MAIN);
                 Log.d("connection" ,"doInBackground:*************************************************** ");
 
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException e)
+            {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
                 return "exception";
@@ -301,9 +329,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 conn.setDoOutput(true);
 
                 // Append parameters to URL
+                // post name and value param
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("user_select", params[0]);
-
+                        .appendQueryParameter("user_select", params[0])
+                        .appendQueryParameter("user_pseudo", params[1]);
                 String query = builder.build().getEncodedQuery();
 
                 // Open connection for sending data
@@ -316,12 +345,12 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 os.close();
                 conn.connect();
 
-            } catch (IOException e1) {
+            } catch (IOException e1)
+            {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
                 return "exception";
             }
-
             try {
 
                 int response_code = conn.getResponseCode();
@@ -347,45 +376,73 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                     return("unsuccessful");
                 }
 
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 e.printStackTrace();
                 return "exception";
-            } finally {
+            }
+            finally {
                 conn.disconnect();
             }
-
-
         }
 
         @Override
         protected void onPostExecute(String result) {
 
             //this method will be running on UI thread
-
             pdLoading.dismiss();
             Log.d("message du serveur", result);
-            if(result!="")
+            if(result!="" && !result.equalsIgnoreCase("false"))
             {
                 /* Here launching another activity when login successful. If you persist login state
                 use sharedPreferences of Android. and logout button to clear sharedPreferences.
                  */
-                Log.d("result***************************************************************************************************************************" +
+                Log.e("result***************************************************************************************************************************" +
                         "", "onPostExecute: "+result);
 
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String[] user_result = new String[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject obj = null;
+                    try {
+                        obj = jsonArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        //user_result[i] = obj.getString("nom");
+                        USER_NAME=obj.getString("nom");
+                        USER_PSEUDO=obj.getString("pseudo");
+                        USER_ACCOUNT_ID=obj.getString("account_id");
+                        txt_user_pseudo.setText(USER_NAME);
+                        //Toast.makeText(PageMainActivity.this,USER_ACCOUNT_ID+" "+USER_NAME+" "+USER_PSEUDO,Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }else if (result.equalsIgnoreCase("false"))
+            {
 
-            }else if (result.equalsIgnoreCase("false")){
-
-                // If username and password does not match display a error message
-                Toast.makeText(PageMainActivity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
-
+                Log.e("probleme***************************************************************************************************************************" +
+                        "", "onPostExecute: un probleme");
             } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
 
                 Toast.makeText(PageMainActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
 
             }
 
-        }
+       /**
+        *
+        *
+        */
 
+
+        }
     }
 
 }
