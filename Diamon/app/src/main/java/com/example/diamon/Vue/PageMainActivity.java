@@ -16,6 +16,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,11 +50,15 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur;
+    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur, txt_old,txt_new,txt_nb_dmd;
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
-    public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="";
+    public static final String URL_DMD ="http://192.168.1.120/dmd/function_valeur_dmd.php";
+
+    public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="",DMD_VALUE="",DMD_TAUX="0", DMD_PRIX="",PWD="";
+    public String BALANCE;
+    public float OLD_TAUX=0,NEW_TAUX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,11 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         btn_buy = findViewById(R.id.btn_buy);
         txt_user_pseudo = header.findViewById(R.id.id_user_pseudo);
         txt_taux= findViewById(R.id.id_taux);
+        txt_valeur= findViewById(R.id.id_valeur);
+        txt_nb_dmd= findViewById(R.id.id_nb_dmd);
+        txt_prix= findViewById(R.id.id_prix);
+        txt_old= findViewById(R.id.old);
+        txt_new= findViewById(R.id.new_t);
         /**
          * btn_buy
          */
@@ -105,6 +115,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         if(bundle!=null)
         {
             USER_PSEUDO =(String) bundle.get("pseudo");
+            PWD=(String) bundle.get("pwd");
         }
 
 
@@ -121,10 +132,13 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(isConnectingToInternet(PageMainActivity.this))
-        {
-            Toast.makeText(getApplicationContext(),"internet is available",Toast.LENGTH_LONG).show();
+        if(isConnectingToInternet(PageMainActivity.this)) {
+            Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
             select_user(USER_PSEUDO);
+            select_dmd();
+            //OLD_TAUX = Float.parseFloat(DMD_TAUX);
+
+
         }
         else {
             Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
@@ -132,7 +146,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
 
 
-      /*  GraphView graph = (GraphView) findViewById(R.id.graph);
+        /*  GraphView graph = (GraphView) findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
 
                 new DataPoint(0, 0.1),
@@ -176,12 +190,22 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             graph.getViewport().setScrollable(true);
             graph.addSeries(series);*/
 
+
+    }
+
+        public void actualiser(){
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    select_dmd();
+                }
+            },10000);
         }
+        // drawer menu function
 
-    // drawer menu function
-
-    @Override
-    public void onBackPressed(){
+        @Override
+        public void onBackPressed(){
 
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -189,10 +213,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                  super.onBackPressed();
         }
     }
-/* home, setting, deposit, send, withdrawal, blp,identity*/
+        /* home, setting, deposit, send, withdrawal, blp,identity*/
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
 
@@ -207,6 +231,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.send:
                 Intent intent_send = new Intent(PageMainActivity.this, SendActivity.class);
+                intent_send.putExtra("user_account_id",USER_ACCOUNT_ID);
+                intent_send.putExtra("balance",BALANCE);
+                intent_send.putExtra("pwd",PWD);
                 startActivity(intent_send);
                 break;
 
@@ -254,9 +281,8 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-
-    public static boolean isConnectingToInternet(PageMainActivity context)
-    {
+        public static boolean isConnectingToInternet(PageMainActivity context)
+        {
         ConnectivityManager connectivity =
                 (ConnectivityManager) context.getSystemService(
                         Context.CONNECTIVITY_SERVICE);
@@ -274,8 +300,12 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+        /**
+        *SELECTION DES INFO USER NAME
+        * PSEUDO , ACCOUNT_ID , BALANCE
+        */
 
-    public void select_user(String user_pseudo) {
+        public void select_user(String user_pseudo) {
 
         // Initialize  AsyncLogin() class with email and password
         /**
@@ -286,8 +316,8 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-    private class AsyncUser extends AsyncTask<String, String, String>
-    {
+        private class AsyncUser extends AsyncTask<String, String, String>
+        {
         ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
         HttpURLConnection conn;
         URL url = null;
@@ -297,9 +327,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             super.onPreExecute();
 
             //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
+            //pdLoading.setMessage("\tLoading...");
+           // pdLoading.setCancelable(false);
+            //pdLoading.show();
 
         }
 
@@ -392,7 +422,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             //this method will be running on UI thread
             pdLoading.dismiss();
             Log.d("message du serveur", result);
-            if(result!="" && !result.equalsIgnoreCase("false"))
+            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
             {
                 /* Here launching another activity when login successful. If you persist login state
                 use sharedPreferences of Android. and logout button to clear sharedPreferences.
@@ -419,6 +449,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                         USER_NAME=obj.getString("nom");
                         USER_PSEUDO=obj.getString("pseudo");
                         USER_ACCOUNT_ID=obj.getString("account_id");
+                        BALANCE=obj.getString("nb_dmd");
                         txt_user_pseudo.setText(USER_NAME);
                         //Toast.makeText(PageMainActivity.this,USER_ACCOUNT_ID+" "+USER_NAME+" "+USER_PSEUDO,Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
@@ -441,8 +472,208 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         *
         */
 
-
         }
     }
+
+        /**
+        *SELECTION DES INFO DMD VALEUR , PRIX , TAUX
+        *
+        */
+        public void select_dmd() {
+
+            // Initialize  AsyncLogin() class with email and password
+            /**
+             * valeur a envoyer vers le serveur
+             */
+            new PageMainActivity.AsyncDMD().execute("select_dmd");
+
+        }
+
+        private class AsyncDMD extends AsyncTask<String, String, String>
+        {
+            ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
+            HttpURLConnection conn;
+            URL url = null;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                //this method will be running on UI thread
+               // pdLoading.setMessage("\tLoading...");
+               // pdLoading.setCancelable(false);
+               // pdLoading.show();
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+
+                    // Enter URL address where your php file resides
+                    url = new URL(URL_DMD);
+                    Log.d("connection" ,"doInBackground:*************************************************** ");
+
+                } catch (MalformedURLException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    return "exception";
+                }
+                try {
+                    // Setup HttpURLConnection class to send and receive data from php and mysql
+                    conn = (HttpURLConnection)url.openConnection();
+                    conn.setReadTimeout(READ_TIMEOUT);
+                    conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                    conn.setRequestMethod("POST");
+
+                    // setDoInput and setDoOutput method depict handling of both send and receive
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    // Append parameters to URL
+                    // post name and value param
+                    Uri.Builder builder = new Uri.Builder()
+                            .appendQueryParameter("select_dmd", params[0]);
+                    String query = builder.build().getEncodedQuery();
+
+                    // Open connection for sending data
+                    OutputStream os = conn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(query);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                    conn.connect();
+
+                } catch (IOException e1)
+                {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                    return "exception";
+                }
+                try {
+
+                    int response_code = conn.getResponseCode();
+
+                    // Check if successful connection made
+                    if (response_code == HttpURLConnection.HTTP_OK) {
+
+                        // Read data sent from server
+                        InputStream input = conn.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                        StringBuilder result = new StringBuilder();
+                        String line;
+
+                        while ((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+
+                        // Pass data to onPostExecute method
+                        return(result.toString());
+
+                    }else{
+
+                        return("unsuccessful");
+                    }
+
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                    return "exception";
+                }
+                finally {
+                    conn.disconnect();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+
+                //this method will be running on UI thread
+                pdLoading.dismiss();
+                Log.d("message du serveur", result);
+                if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
+                {
+                /* Here launching another activity when login successful. If you persist login state
+                use sharedPreferences of Android. and logout button to clear sharedPreferences.
+                 */
+                    Log.e("result***************************************************************************************************************************" +
+                            "", "onPostExecute: "+result);
+
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String[] dmd_result = new String[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = null;
+                        try {
+                            obj = jsonArray.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            OLD_TAUX=Float.parseFloat(DMD_TAUX);
+                            //user_result[i] = obj.getString("nom");
+                            DMD_VALUE=obj.getString("valeur");
+                            //DMD_PRIX=obj.getString("prix");
+                            DMD_TAUX=obj.getString("taux");
+                            float valeur_set=Float.parseFloat(DMD_VALUE);
+                            float nb_dmd_set =Float.parseFloat(BALANCE);
+                            txt_nb_dmd.setText(BALANCE+" DMD");
+                            txt_prix.setText("$"+(valeur_set*nb_dmd_set));
+                            txt_valeur.setText(DMD_VALUE);
+                            NEW_TAUX=Float.parseFloat(DMD_TAUX);
+
+                            float aff_taux=NEW_TAUX-OLD_TAUX;
+                            txt_taux.setText(aff_taux+"%");
+                            select_user(USER_PSEUDO);
+                            if(aff_taux < 0){
+                                Drawable img = txt_taux.getContext().getResources().getDrawable(R.drawable.ic_trend_down);
+                                txt_taux.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
+                                txt_taux.setText(aff_taux+"%");
+                                txt_taux.setTextColor(getResources().getColor(R.color.red1));}else{
+                                if(aff_taux > 0){
+                                    Drawable img2 = txt_taux.getContext().getResources().getDrawable( R.drawable.ic_trend_up );
+                                    txt_taux.setCompoundDrawablesWithIntrinsicBounds( img2, null, null, null);
+                                    txt_taux.setText(aff_taux+"%");
+                                    txt_taux.setTextColor(getResources().getColor(R.color.vert1));
+
+                                }else{
+                                    Drawable img3 = txt_taux.getContext().getResources().getDrawable( R.drawable.ic_trend_up );
+                                    txt_taux.setCompoundDrawablesWithIntrinsicBounds( img3, null, null, null);
+                                    txt_taux.setText(aff_taux+"%");
+                                    txt_taux.setTextColor(getResources().getColor(R.color.vert1));}
+                            }
+
+                            actualiser();
+                            //Toast.makeText(PageMainActivity.this,BALANCE,Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }else if (result.equalsIgnoreCase("false"))
+                {
+
+                    Log.e("probleme***************************************************************************************************************************" +
+                            "", "onPostExecute: un probleme");
+                } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
+
+                    Toast.makeText(PageMainActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
+
+                }
+
+                /**
+                 *
+                 *
+                 */
+
+
+            }
+        }
 
 }

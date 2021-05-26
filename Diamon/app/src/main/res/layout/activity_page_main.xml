@@ -119,30 +119,53 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+            <TextView
+                android:id="@+id/valeur_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Valeur du DMD"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/id_prix"/>
 
             <TextView
                 android:id="@+id/id_valeur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:text="$0,0034"
                 android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/id_prix" />
+                app:layout_constraintTop_toBottomOf="@+id/valeur_txt" />
 
             <TextView
                 android:id="@+id/id_taux"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_trend_up"
                 android:text=" +12,8%"
                 android:textColor="@color/vert1"
                 android:textSize="15dp"
-                android:drawableLeft="@drawable/ic_trend_up"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/id_valeur"
-                app:layout_constraintTop_toBottomOf="@+id/id_prix" />
+                app:layout_constraintTop_toBottomOf="@+id/valeur_txt" />
+
+            <TextView
+                android:id="@+id/id_nb_dmd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="0DMD"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <soup.neumorphism.NeumorphButton
                 android:id="@+id/btn_graph"
@@ -223,6 +246,19 @@
         android:background="@drawable/border_raduis_top"
         android:gravity="center">
 
+        <TextView
+            android:id="@+id/old"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/new_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
     </LinearLayout>
 <!--
     <soup.neumorphism.NeumorphCardView

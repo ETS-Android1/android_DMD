@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("switch",MODE_PRIVATE);
         String le_switch = preferences.getString("remember","");
         String le_pseudo = preferences.getString("pseudo","");
+        String le_pwd = preferences.getString("pwd","");
 
         /**
          * check remember
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Intent intent = new Intent(LoginActivity.this, PageMainActivity.class);
             intent.putExtra("pseudo",le_pseudo);
+            intent.putExtra("pwd",le_pwd);
             startActivity(intent);
             LoginActivity.this.finish();
 
@@ -291,6 +293,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("remember","true");
                         editor.putString("pseudo",user_name);
+                        editor.putString("pwd", pwd);
                         editor.apply();
                         Toast.makeText(LoginActivity.this,"will remember you",Toast.LENGTH_LONG).show();
                 }
