@@ -66,11 +66,11 @@ public class SendActivity extends AppCompatActivity {
 
                 Toast.makeText(SendActivity.this, USER_ACCOUNT_ID+" "+PWD+" "+BALANCE, Toast.LENGTH_LONG).show();
                 AMOUNT = txt_amount.getText().toString();
-                CODE = txt_code.getText().toString();
+                //CODE = txt_code.getText().toString();
                 float balance_ = Float.parseFloat(BALANCE);
                 float amount_ = Float.parseFloat(AMOUNT);
 
-                //CODE= txt_code.getText().toString();
+                CODE= txt_code.getText().toString();
                 if (PWD.equals(CODE)) {
                     if (amount_ <= balance_) {
                         send_dmd();

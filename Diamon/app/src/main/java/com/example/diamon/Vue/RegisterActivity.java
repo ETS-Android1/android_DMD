@@ -184,6 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(RegisterActivity.this,PageMainActivity.class);
                 intent.putExtra("pseudo",pseudo);
+                intent.putExtra("pwd",pwd);
                 startActivity(intent);
                 startActivity(intent);
                 RegisterActivity.this.finish();

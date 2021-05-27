@@ -127,8 +127,10 @@
                 android:layout_marginTop="5dp"
                 android:text="Valeur du DMD"
                 android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/id_prix"/>
+                app:layout_constraintTop_toBottomOf="@+id/id_prix"
+                app:layout_constraintVertical_bias="0.206" />
 
             <TextView
                 android:id="@+id/id_valeur"
@@ -140,7 +142,8 @@
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/valeur_txt" />
+                app:layout_constraintTop_toBottomOf="@+id/valeur_txt"
+                app:layout_constraintVertical_bias="0.041" />
 
             <TextView
                 android:id="@+id/id_taux"
@@ -154,18 +157,24 @@
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/id_valeur"
-                app:layout_constraintTop_toBottomOf="@+id/valeur_txt" />
+                app:layout_constraintTop_toBottomOf="@+id/valeur_txt"
+                app:layout_constraintVertical_bias="0.045" />
 
             <TextView
                 android:id="@+id/id_nb_dmd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
                 android:text="0DMD"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/id_taux"
+                app:layout_constraintTop_toBottomOf="@+id/valeur_txt"
+                app:layout_constraintVertical_bias="0.062" />
 
             <soup.neumorphism.NeumorphButton
                 android:id="@+id/btn_graph"

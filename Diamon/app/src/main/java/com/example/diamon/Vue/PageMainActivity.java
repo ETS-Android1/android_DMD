@@ -95,7 +95,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         });
 
         /**
-         * btn_buy
+         * btn_sell
          */
 
         btn_sell.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +221,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         switch (item.getItemId()){
 
             case  R.id.home:
-                Toast.makeText(this,"home clicked",Toast.LENGTH_LONG).show();
+                Intent intent_home = new Intent(PageMainActivity.this, PageMainActivity.class);
+                intent_home.putExtra("pseudo",USER_PSEUDO);
+                intent_home.putExtra("pwd",PWD);
+                startActivity(intent_home);
                 break;
 
             case R.id.buy:
@@ -241,8 +244,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 Intent intent_wi = new Intent(PageMainActivity.this, withdrawalActivity.class);
                 startActivity(intent_wi);
                 break;
+
             case R.id.setting:
                 Intent intent_tran = new Intent(PageMainActivity.this, TransactionsActivity.class);
+                intent_tran.putExtra("user_account_id",USER_ACCOUNT_ID);
                 startActivity(intent_tran);
                 break;
 
@@ -250,6 +255,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 Intent intent_blp = new Intent(PageMainActivity.this, BlpActivity.class);
                 startActivity(intent_blp);
                 break;
+
             case R.id.profile:
                 Intent intent_profile = new Intent(PageMainActivity.this, ProfileActivity.class);
                 intent_profile.putExtra("user_name",USER_NAME);

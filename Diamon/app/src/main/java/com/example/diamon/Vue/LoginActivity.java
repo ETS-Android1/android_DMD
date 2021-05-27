@@ -301,6 +301,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(LoginActivity.this,PageMainActivity.class);
                 intent.putExtra("pseudo",user_name);
+                intent.putExtra("pwd",pwd);
                 startActivity(intent);
                 LoginActivity.this.finish();
 

@@ -77,11 +77,12 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_money"
+                    android:drawableLeft="@drawable/ic_wallet"
                     android:ems="10"
-                    android:hint="Amount"
+                    android:hint="Number of DMD"
                     android:inputType="text"
                     android:textCursorDrawable="@drawable/cursor" />
+
             </soup.neumorphism.NeumorphCardView>
 
             <soup.neumorphism.NeumorphCardView
@@ -100,7 +101,7 @@
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/ic_lock"
                     android:ems="10"
-                    android:hint="Secret code"
+                    android:hint="Password"
                     android:inputType="textPassword"
                     android:textCursorDrawable="@drawable/cursor" />
             </soup.neumorphism.NeumorphCardView>
