@@ -51,6 +51,9 @@ public class ProfileActivity extends AppCompatActivity {
     public static final int READ_TIMEOUT=15000;
 
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+    //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
+    //public static final String URL_DMD ="http://dmd.moulenetadi.com/function_valeur_dmd.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,12 @@ public class ProfileActivity extends AppCompatActivity {
             txt_user_name.setText(USER_NAME);
             txt_user_pseudo.setText(USER_PSEUDO);
             txt_user_account_id.setText(USER_ACCOUNT_ID);
+
+            if(isConnectingToInternet(ProfileActivity.this)) {
             select_user(USER_PSEUDO);
+            }else {
+            Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
+        }
             /*
             txt_user_phone.setText(USER_PHONE);
             txt_user_mail.setText(USER_MAIL);
@@ -94,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
                USER_MAIL        =txt_user_mail.getText().toString();
                USER_PAYS        =txt_user_pays.getText().toString();
                USER_PAY_AGENT  =txt_user_pay_agent.getText().toString();
-
+                if(isConnectingToInternet(ProfileActivity.this)) {
                 new ProfileActivity.AsyncUpdate_Profile().execute(  USER_NAME,
                                                                     USER_ACCOUNT_ID,
                                                                     USER_PHONE,
@@ -102,13 +110,17 @@ public class ProfileActivity extends AppCompatActivity {
                                                                     USER_PAYS,
                                                                     USER_PAY_AGENT,
                                                                     "update_profile");
+                }else{
+                    Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
 
 
     }
-    public static boolean isConnectingToInternet(PageMainActivity context)
+
+    public static boolean isConnectingToInternet(ProfileActivity context)
     {
         ConnectivityManager connectivity =
                 (ConnectivityManager) context.getSystemService(
@@ -136,6 +148,7 @@ public class ProfileActivity extends AppCompatActivity {
         new ProfileActivity.AsyncUser().execute("select_user",user_pseudo);
 
     }
+
     private class AsyncUser extends AsyncTask<String, String, String>
     {
         ProgressDialog pdLoading = new ProgressDialog(ProfileActivity.this);

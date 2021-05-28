@@ -3,7 +3,10 @@ package com.example.diamon.Vue;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +36,8 @@ public class SendActivity extends AppCompatActivity {
     public TextView txt_receiver_id,txt_amount,txt_code;
     public String RECEIVER,AMOUNT,CODE;
     public static final String URL_DMD ="http://192.168.1.120/dmd/function_valeur_dmd.php";
+    //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
+    //public static final String URL_DMD ="http://dmd.moulenetadi.com/function_valeur_dmd.php";
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
     public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="",BALANCE="",PWD="";
@@ -64,13 +69,14 @@ public class SendActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(SendActivity.this, USER_ACCOUNT_ID+" "+PWD+" "+BALANCE, Toast.LENGTH_LONG).show();
+                if(isConnectingToInternet(SendActivity.this)) {
+                //Toast.makeText(SendActivity.this, USER_ACCOUNT_ID + " " + PWD + " " + BALANCE, Toast.LENGTH_LONG).show();
                 AMOUNT = txt_amount.getText().toString();
                 //CODE = txt_code.getText().toString();
                 float balance_ = Float.parseFloat(BALANCE);
                 float amount_ = Float.parseFloat(AMOUNT);
 
-                CODE= txt_code.getText().toString();
+                CODE = txt_code.getText().toString();
                 if (PWD.equals(CODE)) {
                     if (amount_ <= balance_) {
                         send_dmd();
@@ -80,6 +86,10 @@ public class SendActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(SendActivity.this, "Wrong password ", Toast.LENGTH_LONG).show();
                 }
+            } else {
+                    Toast.makeText(SendActivity.this, "you are not connected ", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -89,11 +99,24 @@ public class SendActivity extends AppCompatActivity {
 
 
 
+    public static boolean isConnectingToInternet(SendActivity context)
+    {
+        ConnectivityManager connectivity =
+                (ConnectivityManager) context.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+        }
+        return false;
 
-
-
-
-
+    }
 
 
 
@@ -242,9 +265,6 @@ public class SendActivity extends AppCompatActivity {
         }
 
         }
-
-
-
 
 
 }

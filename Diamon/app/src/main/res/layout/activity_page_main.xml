@@ -52,12 +52,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3.3"
-            android:orientation="horizontal"
-           ></LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
 
-       <!-- <soup.neumorphism.NeumorphCardView
+             <!-- <soup.neumorphism.NeumorphCardView
             style="@style/Widget.Neumorph.CardView"-->
-            <LinearLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1.5"
             android:layout_height="match_parent">
@@ -67,8 +66,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_notification"
-           />
+            app:srcCompat="@drawable/ic_notification" />
+
             <TextView
                 android:id="@+id/id_notif_nb"
                 android:layout_width="wrap_content"
@@ -76,15 +75,17 @@
                 android:padding="0dp"
                 android:layout_marginTop="5dp"
                 android:text="12"/>
-            </LinearLayout>
+
         </LinearLayout>
-        <soup.neumorphism.NeumorphCardView
+    </LinearLayout>
+
+    <soup.neumorphism.NeumorphCardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
             app:neumorph_shapeType="flat"
             >
-    <LinearLayout
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -176,7 +177,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/valeur_txt"
                 app:layout_constraintVertical_bias="0.062" />
 
-            <soup.neumorphism.NeumorphButton
+           <!-- <soup.neumorphism.NeumorphButton
                 android:id="@+id/btn_graph"
                 style="@style/Widget.Neumorph.Button"
                 android:layout_width="wrap_content"
@@ -186,11 +187,14 @@
                 android:text="Graph"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:neumorph_shapeType="basin" />
+                app:neumorph_shapeType="basin" />-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-    </soup.neumorphism.NeumorphCardView>
+
+        </soup.neumorphism.NeumorphCardView>
+
         <!--
         <soup.neumorphism.NeumorphCardView
             style="@style/Widget.Neumorph.ImageView"
@@ -225,115 +229,105 @@
         android:gravity="center"
         android:weightSum="3">
 
-    <soup.neumorphism.NeumorphButton
-        style="@style/Widget.Neumorph.Button"
-        android:id="@+id/btn_buy"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Buy"
-        android:textColor="@color/vert1"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        />
+        <soup.neumorphism.NeumorphButton
+            style="@style/Widget.Neumorph.Button"
+            android:id="@+id/btn_buy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Buy"
+            android:textColor="@color/vert1"
+            android:layout_margin="5dp"
+            android:layout_weight="1" />
 
         <soup.neumorphism.NeumorphButton
             android:id="@+id/btn_sell"
             style="@style/Widget.Neumorph.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Sell"
-        android:layout_margin="5dp"
-        android:textColor="@color/red1" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sell"
+            android:layout_margin="5dp"
+            android:textColor="@color/red1" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4.7"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@drawable/border_raduis_top"
-        android:gravity="center">
+        android:weightSum="5">
 
-        <TextView
-            android:id="@+id/old"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+        <soup.neumorphism.NeumorphCardView
+            style="@style/Widget.Neumorph.ImageView"
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:layout_margin="0dp"
+            app:neumorph_shapeType="flat">
 
-        <TextView
-            android:id="@+id/new_t"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <com.jjoe64.graphview.GraphView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/neuwhite"
+                android:id="@+id/graph"/>
+
+        </soup.neumorphism.NeumorphCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_height="0dp"
+            android:weightSum="4"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="H"
+                android:textStyle="bold"
+                android:backgroundTint="#A5D3F6"
+                android:layout_margin="1dp"
+               />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:backgroundTint="#A5D3F6"
+                android:textStyle="bold"
+                android:text="D"
+                android:layout_margin="1dp"
+               />
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="W"
+                android:textStyle="bold"
+                android:backgroundTint="#A5D3F6"
+                android:layout_margin="1dp"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:backgroundTint="#A5D3F6"
+                android:textStyle="bold"
+                android:text="M"
+                android:layout_margin="1dp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
-<!--
-    <soup.neumorphism.NeumorphCardView
-        style="@style/Widget.Neumorph.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        app:neumorph_shapeType="basin">
-        <LinearLayout
-        android:id="@+id/liste_crypto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <soup.neumorphism.NeumorphCardView
-            style="@style/Widget.Neumorph.CardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:neumorph_backgroundColor="@color/neuwhite"
-            app:neumorph_shapeType="flat">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="7dp"
-            android:layout_weight="5">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="BitCoin"
-                android:layout_weight="4"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="$19678.74"/>
-        </LinearLayout>
-
-        </soup.neumorphism.NeumorphCardView>
-
-        <soup.neumorphism.NeumorphCardView
-            style="@style/Widget.Neumorph.CardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:neumorph_backgroundColor="@color/neuwhite"
-            app:neumorph_shapeType="flat">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="7dp"
-            android:layout_weight="5">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Etherum"
-                android:layout_weight="4"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="$687.34"/>
-        </LinearLayout>
-        </soup.neumorphism.NeumorphCardView>
-        </LinearLayout>
-    </soup.neumorphism.NeumorphCardView>-->
 
 </LinearLayout>
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

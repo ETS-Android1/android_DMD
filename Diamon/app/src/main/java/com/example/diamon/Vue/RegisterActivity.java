@@ -3,7 +3,10 @@ package com.example.diamon.Vue;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText ed_pseudo;
     public  String user_name,pseudo,pwd;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+    //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
+    //public static final String URL_DMD ="http://dmd.moulenetadi.com/function_valeur_dmd.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +54,36 @@ public class RegisterActivity extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ed_pwd.getText().toString().length()>=8){
-                checkRegister();
-                } else{ Toast.makeText(RegisterActivity.this,"entrer 8 caracter for password",Toast.LENGTH_LONG).show();
+                if (ed_pwd.getText().toString().length()>=8) {
+                    if (isConnectingToInternet(RegisterActivity.this)){
+                        checkRegister();
+                    }
+                 } else{ Toast.makeText(RegisterActivity.this,"entrer 8 caracter for password",Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
 
+
+    public static boolean isConnectingToInternet(RegisterActivity context)
+    {
+        ConnectivityManager connectivity =
+                (ConnectivityManager) context.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+            if (info != null)
+                for (int i = 0; i < info.length; i++)
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+        }
+        return false;
+
+    }
     public void checkRegister() {
 
         // Get text from email and passord field

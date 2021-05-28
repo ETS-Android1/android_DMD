@@ -39,6 +39,8 @@ public class TransactionsActivity extends AppCompatActivity {
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+    //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
+    //public static final String URL_DMD ="http://dmd.moulenetadi.com/function_valeur_dmd.php";
     public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="";
 
 

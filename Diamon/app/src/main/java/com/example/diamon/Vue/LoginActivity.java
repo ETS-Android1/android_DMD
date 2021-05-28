@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         public String user_name,pwd;
         public Switch rmb;
         public String is_rmb="false";
-        public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+       public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+       //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -109,21 +110,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                checkLogin();
+                /**
+                 * check connection
+                 */
+                if(isConnectingToInternet(LoginActivity.this))
+                {
+                    checkLogin();
+                    Toast.makeText(getApplicationContext(),"internet is available",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });
 
-        /**
-         * check connection
-         */
-        if(isConnectingToInternet(LoginActivity.this))
-        {
-            Toast.makeText(getApplicationContext(),"internet is available",Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
-        }
+
     }
 
     /**

@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,6 +29,9 @@ import android.widget.Toolbar;
 
 import com.example.diamon.R;
 import com.google.android.material.navigation.NavigationView;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +59,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     public static final int READ_TIMEOUT=15000;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
     public static final String URL_DMD ="http://192.168.1.120/dmd/function_valeur_dmd.php";
+    //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
+    //public static final String URL_DMD ="http://dmd.moulenetadi.com/function_valeur_dmd.php";
+
 
     public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="",DMD_VALUE="",DMD_TAUX="0", DMD_PRIX="",PWD="";
     public String BALANCE;
@@ -81,8 +88,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         txt_valeur= findViewById(R.id.id_valeur);
         txt_nb_dmd= findViewById(R.id.id_nb_dmd);
         txt_prix= findViewById(R.id.id_prix);
-        txt_old= findViewById(R.id.old);
-        txt_new= findViewById(R.id.new_t);
         /**
          * btn_buy
          */
@@ -146,7 +151,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
 
 
-        /*  GraphView graph = (GraphView) findViewById(R.id.graph);
+          GraphView graph = (GraphView) findViewById(R.id.graph);
             LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
 
                 new DataPoint(0, 0.1),
@@ -188,7 +193,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             graph.getGridLabelRenderer().setHighlightZeroLines(false);
             graph.getViewport().setScalable(true);
             graph.getViewport().setScrollable(true);
-            graph.addSeries(series);*/
+            graph.addSeries(series);
 
 
     }
