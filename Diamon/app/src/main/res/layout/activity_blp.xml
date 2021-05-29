@@ -18,14 +18,15 @@
             android:gravity="center"
             android:padding="10dp"
             android:background="@drawable/border_set">
-            <TextView
+
+        <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Local provider"
                 android:textStyle="bold"
                 android:textSize="20dp"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -33,39 +34,82 @@
             android:layout_weight="11"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="2dp"
             android:weightSum="8">
+        <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+            android:layout_weight="1.2">
 
+            <soup.neumorphism.NeumorphCardView
+                style="@style/Widget.Neumorph.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                app:neumorph_shapeType="pressed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="4">
+
+                    <EditText
+                        android:id="@+id/txt_search"
+                        android:layout_width="0dp"
+                        android:layout_weight="2.9"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:ems="10"
+                        android:hint=" search"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/cursor"
+                        android:background="@android:color/transparent" />
+
+                    <soup.neumorphism.NeumorphButton
+                        style="@style/Widget.Neumorph.Button"
+                        android:id="@+id/btn_search"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        app:neumorph_shapeType="flat"
+                        android:drawableRight="@drawable/ic_search">
+
+                    </soup.neumorphism.NeumorphButton>
+
+                </LinearLayout>
+
+            </soup.neumorphism.NeumorphCardView>
+
+        </LinearLayout>
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:src="@drawable/lcp"/>
+                android:layout_weight="1.5"
+                android:src="@drawable/img_local"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
 
-         <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/id_add_blp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/id_add_blp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
-         <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/id_provider_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

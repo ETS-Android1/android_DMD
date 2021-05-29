@@ -35,7 +35,7 @@ public class BlpActivity extends AppCompatActivity {
     FloatingActionButton add_btn;
 
     RecyclerView recyclerView;
-    String[] s1= new String[5] ;
+    String[] s1= new String[8] ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,14 @@ public class BlpActivity extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.id_provider_recyclerview);
-        s1[0]="provider 0";
-        s1[1]="provider 1";
-        s1[2]="provider 2";
-        s1[3]="provider 3";
+        s1[0]="Koffi blaise";
+        s1[1]="Alex Manu";
+        s1[2]="Leo Snart";
+        s1[3]="Kob bryan";
+        s1[4]="Koffi blaise";
+        s1[5]="Alex Manu";
+        s1[6]="Leo Snart";
+        s1[7]="Kob bryan";
         ProviderAdapter providerAdapter = new ProviderAdapter(BlpActivity.this,s1);
         recyclerView.setAdapter(providerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BlpActivity.this));
