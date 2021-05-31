@@ -258,6 +258,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.blp:
                 Intent intent_blp = new Intent(PageMainActivity.this, BlpActivity.class);
+                intent_blp.putExtra("user_name",USER_NAME);
+                intent_blp.putExtra("user_pseudo",USER_PSEUDO);
+                intent_blp.putExtra("user_account_id",USER_ACCOUNT_ID);
                 startActivity(intent_blp);
                 break;
 

@@ -4,12 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#0d1124"
+    android:background="#DADBDF"
     android:layout_height="match_parent">
 
 
     <LinearLayout
-
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,48 +18,94 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_local"
             android:layout_marginTop="10dp"/>
 
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
+            android:text="Been Local provider"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:hint="Objectif"
-            android:inputType="textPersonName"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-
-        <EditText
-            android:id="@+id/editTextTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/id_type_provider"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:hint="Nombre d'heure"
-            android:inputType="time"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:hint="Provider"
+            android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/id_pays"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:hint="Country"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/id_ville"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:hint="Town"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/id_pay_agent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:hint="Local Mobile Money"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/id_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:hint="WhatsApp Phone number"
+            android:inputType="phone" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="5"
-        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.289"
-        tools:layout_editor_absoluteX="-16dp">
+        app:layout_constraintVertical_bias="0.57"
+        tools:layout_editor_absoluteX="0dp">
 
         <Button
             android:id="@+id/save"
@@ -68,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:text="Ajouter"
+            android:text="Save"
             android:textColor="@color/white"
             app:backgroundTint="#DD7C857C" />
 
@@ -78,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:text="Annuler"
+            android:text="Cancel"
             android:textColor="@color/white"
             app:backgroundTint="#DDFD0808" />
 
