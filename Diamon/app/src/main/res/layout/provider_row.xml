@@ -34,8 +34,8 @@
                     android:id="@+id/id_type_img"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/prof" />
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/ic_account" />
 
             </LinearLayout>
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="TextView"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -65,17 +65,40 @@
                 android:src="@drawable/flag_togo" />
 
             <TextView
-                android:id="@+id/id_dat"
+                android:id="@+id/id_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="5dp"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:text="Buyer &amp; Seller"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/linearLayout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/id_txt_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Pay Agent:"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/id_type" />
+
+            <TextView
+                android:id="@+id/id_lcl_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginBottom="5dp"
+                android:text="Mobile Money"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/id_txt_p" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

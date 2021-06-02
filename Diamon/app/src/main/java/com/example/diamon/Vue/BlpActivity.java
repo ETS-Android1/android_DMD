@@ -27,6 +27,10 @@ import com.example.diamon.Modele.ProviderAdapter;
 import com.example.diamon.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -56,7 +60,7 @@ public class BlpActivity extends AppCompatActivity {
 
     EditText id_town, id_lcl_money,id_phone;
     RecyclerView recyclerView;
-    String[] s1= new String[8] ;
+    String s1[][] ;
 
     Spinner pays, type_provider;
 
@@ -66,6 +70,15 @@ public class BlpActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_blp);
+
+
+        if(isConnectingToInternet(BlpActivity.this)) {
+            Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
+            select_lp();
+        }
+        else {
+            Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
+        }
 
         add_btn = findViewById(R.id.id_add_blp);
 
@@ -87,18 +100,6 @@ public class BlpActivity extends AppCompatActivity {
 
         }
 
-        recyclerView = findViewById(R.id.id_provider_recyclerview);
-        s1[0]="Koffi blaise";
-        s1[1]="Alex Manu";
-        s1[2]="Leo Snart";
-        s1[3]="Kob bryan";
-        s1[4]="Koffi blaise";
-        s1[5]="Alex Manu";
-        s1[6]="Leo Snart";
-        s1[7]="Kob bryan";
-        ProviderAdapter providerAdapter = new ProviderAdapter(BlpActivity.this,s1);
-        recyclerView.setAdapter(providerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BlpActivity.this));
 
        add_btn.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -372,6 +373,208 @@ public class BlpActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void select_lp() {
+
+        // Initialize  AsyncLogin() class with email and password
+        /**
+         * valeur a envoyer vers le serveur
+         */
+        new BlpActivity.AsyncLcl_P().execute("select_blp");
+    }
+
+
+
+    private class AsyncLcl_P extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(BlpActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your php file resides
+                url = new URL(URL_MAIN);
+                Log.d("connection" ,"doInBackground:*************************************************** ");
+
+            } catch (MalformedURLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return "exception";
+            }
+            try {
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection)url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("POST");
+
+                // setDoInput and setDoOutput method depict handling of both send and receive
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                // Append parameters to URL
+                // post name and value param
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("select_blp", params[0]);
+
+                String query = builder.build().getEncodedQuery();
+
+                // Open connection for sending data
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                conn.connect();
+
+            } catch (IOException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return "exception";
+            }
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return(result.toString());
+
+                }else{
+
+                    return("unsuccessful");
+                }
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                return "exception";
+            }
+            finally {
+                conn.disconnect();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+            pdLoading.dismiss();
+            Log.d("message du serveur", result);
+            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
+            {
+                /* Here launching another activity when login successful. If you persist login state
+                use sharedPreferences of Android. and logout button to clear sharedPreferences.
+                 */
+                Log.e("result***************************************************************************************************************************" +
+                        "", "onPostExecute: "+result);
+
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String[][] blp_result = new String[jsonArray.length()][7];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject obj = null;
+                    try {
+                        obj = jsonArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        /**   1->
+                         *    2-> provider_name;
+                         *    3-> number
+                         *    4->pay_agent
+                         *    5->ville_pays
+                         *    6->type"
+                         */
+
+                        blp_result[i][2] = obj.getString("provider_name");
+                        blp_result[i][3] = obj.getString("number");
+                        blp_result[i][4] = obj.getString("pay_agent");
+                        blp_result[i][5] = obj.getString("ville_pays");
+                        blp_result[i][6] = obj.getString("type");
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                recyclerView = findViewById(R.id.id_provider_recyclerview);
+                s1 = blp_result;
+                ProviderAdapter providerAdapter = new ProviderAdapter(BlpActivity.this,s1);
+                recyclerView.setAdapter(providerAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(BlpActivity.this));
+
+
+            }else if (result.equalsIgnoreCase("false"))
+            {
+                Log.e("probleme***************************************************************************************************************************" +
+                        "", "onPostExecute: un probleme");
+            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
+
+                Toast.makeText(BlpActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
+
+            }
+
+            /**
+             *
+             *
+             */
+
+        }
+    }
+
 
 
 }

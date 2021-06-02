@@ -43,6 +43,7 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Provider"
+            android:background="@drawable/border_raduis"
             android:inputType="text" />
 
         <Spinner
@@ -53,42 +54,46 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/border_raduis"
             android:hint="Country"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/id_ville"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:ems="10"
             android:hint="Town"
+            android:background="@drawable/border_raduis"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/id_pay_agent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:background="@drawable/border_raduis"
             android:hint="Local Mobile Money"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/id_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:background="@drawable/border_raduis"
             android:hint="WhatsApp Phone number"
             android:inputType="phone" />
 

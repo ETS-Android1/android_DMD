@@ -2,6 +2,7 @@ package com.example.diamon.Vue;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class PageMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -54,7 +57,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur, txt_old,txt_new,txt_nb_dmd;
+    public AlertDialog.Builder dialogBuilder;
+    public AlertDialog dialog;
+    private Button buy_d, buy_provider;
+    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur,txt_old,txt_new,txt_nb_dmd;
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
@@ -233,8 +239,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.buy:
-                Intent intent_deposit = new Intent(PageMainActivity.this, BuyActivity.class);
-                startActivity(intent_deposit);
+                pop_buy();
+                //Intent intent_deposit = new Intent(PageMainActivity.this, BuyActivity.class);
+                //startActivity(intent_deposit);
                 break;
 
             case R.id.send:
@@ -689,5 +696,41 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
             }
         }
+
+
+    public void pop_buy(){
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View pop_add_view= getLayoutInflater().inflate(R.layout.buy_popup,null);
+       // buy_d = pop_add_view.findViewById(R.id.id_buy_d);
+        buy_provider = pop_add_view.findViewById(R.id.id_buy_provider);
+
+
+        dialogBuilder.setView(pop_add_view);
+        dialog= dialogBuilder.create();
+        dialog.show();
+
+       /* buy_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_deposit = new Intent(PageMainActivity.this, BuyActivity.class);
+                startActivity(intent_deposit);
+            }
+        });*/
+
+        buy_provider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent_blp = new Intent(PageMainActivity.this, BlpActivity.class);
+                intent_blp.putExtra("user_name",USER_NAME);
+                intent_blp.putExtra("user_pseudo",USER_PSEUDO);
+                intent_blp.putExtra("user_account_id",USER_ACCOUNT_ID);
+                startActivity(intent_blp);
+
+            }
+        });
+    }
+
 
 }
