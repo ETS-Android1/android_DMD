@@ -25,26 +25,26 @@ import com.example.diamon.Vue.SendActivity;
 import com.example.diamon.Vue.TransactionsActivity;
 import com.example.diamon.Vue.withdrawalActivity;
 
-public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyViewHolder> {
+public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.MyViewHolder> {
 
     public Context context;
     public  String data[][];
 
-    public ProviderAdapter(Context ct,String[][] s1) {
+    public TopUserAdapter(Context ct,String[][] s1) {
         context = ct;
         data    = s1;
     }
 
     @NonNull
     @Override
-    public ProviderAdapter.MyViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+    public TopUserAdapter.MyViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.provider_row,parent,false);
+        View view = inflater.inflate(R.layout.users_row_h,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProviderAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopUserAdapter.MyViewHolder holder, int position) {
         /**
          *    1->
          *    2-> provider_name;
@@ -121,7 +121,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
 
         }
 
-        boolean installed = isAppInstalled("com.yowhatsapp");
+        boolean installed = isAppInstalled("com.whatsapp");
 
 
 
@@ -170,8 +170,8 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
         boolean is_intalled;
 
         try{
-        packageManager.getPackageInfo(s, PackageManager.GET_ACTIVITIES);
-        is_intalled = true;
+            packageManager.getPackageInfo(s, PackageManager.GET_ACTIVITIES);
+            is_intalled = true;
         } catch (PackageManager.NameNotFoundException e){
             is_intalled = false;
             e.printStackTrace();

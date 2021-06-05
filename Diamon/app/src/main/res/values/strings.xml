@@ -1,5 +1,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <string name="app_name">Diamon</string>
+    <string name="app_name">Diamond</string>
 
     <string-array name="payement_agents">
         <item>Mercury</item>

@@ -9,31 +9,77 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/border_raduis_top"
         android:orientation="vertical"
-        android:weightSum="4"
-        android:background="@color/neuwhite"
+        android:weightSum="5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/id_card"
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/imageView"
+            style="@style/Widget.Neumorph.ImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="20dp">
+            android:layout_margin="0dp"
+            android:layout_weight="4"
+            app:neumorph_shapeType="flat">
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/neuwhite" />
+
+        </soup.neumorphism.NeumorphCardView>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-        </androidx.cardview.widget.CardView>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="4">
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:backgroundTint="#A5D3F6"
+                android:text="H"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:backgroundTint="#A5D3F6"
+                android:text="D"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:backgroundTint="#A5D3F6"
+                android:text="W"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:backgroundTint="#A5D3F6"
+                android:text="M"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

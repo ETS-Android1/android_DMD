@@ -11,15 +11,28 @@
         android:roundIcon="@drawable/logo_dmd"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diamon">
-        <activity android:name=".Vue.GraphActivity"></activity>
-        <activity android:name=".Vue.RegisterActivity" />
-        <activity android:name=".Vue.withdrawalActivity" />
-        <activity android:name=".Vue.ProfileActivity" />
-        <activity android:name=".Vue.BlpActivity" />
+
+        <activity
+            android:name=".Vue.GraphActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Vue.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Vue.withdrawalActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Vue.ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Vue.BlpActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Vue.TransactionsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Vue.Account_Setting" />
+        <activity
+            android:name=".Vue.Account_Setting"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Vue.BuyActivity"
             android:screenOrientation="portrait" />

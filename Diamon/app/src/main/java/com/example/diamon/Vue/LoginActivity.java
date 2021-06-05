@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         public String user_name,pwd;
         public Switch rmb;
         public String is_rmb="false";
-       public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
+        public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
        //public static final String URL_MAIN ="http://dmd.moulenetadi.com/dmd_work.php";
 
     @Override

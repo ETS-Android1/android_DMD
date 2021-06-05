@@ -6,6 +6,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,10 +27,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.diamon.Modele.HistoryAdapter;
+import com.example.diamon.Modele.ProviderAdapter;
+import com.example.diamon.Modele.TopUserAdapter;
 import com.example.diamon.R;
 import com.google.android.material.navigation.NavigationView;
 import com.jjoe64.graphview.GraphView;
@@ -53,7 +59,7 @@ import java.util.ArrayList;
 
 public class PageMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public Button btn_sell,btn_buy;
+    public Button btn_sell,btn_buy,btn_graph;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -73,6 +79,12 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     public String BALANCE;
     public float OLD_TAUX=0,NEW_TAUX;
 
+    RecyclerView recyclerView1,recyclerView2;
+    String s1[][] = new String[4][7];
+    String s2[][]  = new String[4][7];
+    Spinner code_pays;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -86,7 +98,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = findViewById(R.id.layout);
         navigationView = findViewById(R.id.id_nav);
         View header = navigationView.getHeaderView(0);
-     // toolbar = findViewById(R.id.toolbar);
+        // toolbar = findViewById(R.id.toolbar);
         btn_sell = findViewById(R.id.btn_sell);
         btn_buy = findViewById(R.id.btn_buy);
         txt_user_pseudo = header.findViewById(R.id.id_user_pseudo);
@@ -100,8 +112,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PageMainActivity.this, BuyActivity.class);
-                startActivity(intent);
+                pop_buy();
+                //Intent intent = new Intent(PageMainActivity.this, BuyActivity.class);
+                //startActivity(intent);
             }
         });
 
@@ -156,51 +169,45 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         }
 
 
+        /**
+         *    1->
+         *    2-> provider_name;
+         *    3-> number
+         *    4->pay_agent
+         *    5->ville_pays
+         *    6->type"
+         */
 
-          GraphView graph = (GraphView) findViewById(R.id.graph);
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
+        s1[0][2]="name";
+        s1[0][3]="name 3";
+        s1[0][4]="name 4";
+        s1[0][5]="name 5";
+        s1[0][6]="name 6";
 
-                new DataPoint(0, 0.1),
-                new DataPoint(0.2, 0.2),
-                new DataPoint(0.3, 0.5),
-                new DataPoint(0.7, 1),
-                new DataPoint(1, 1.5),
-                new DataPoint(1.5, 1.8),
-                new DataPoint(1.6, 2),
-                new DataPoint(1.7, 2.1),
-                new DataPoint(1.8, 2.2),
-                new DataPoint(1.9, 2),
-                new DataPoint(2, 2.1),
-                new DataPoint(2.1, 2.1),
-                new DataPoint(2.2, 2.5),
-                new DataPoint(2.3, 2.3),
-                new DataPoint(2.4, 2.2),
-                new DataPoint(2.5, 2.6),
-                new DataPoint(2.6, 2.1),
-                new DataPoint(2.7, 2.5),
-                new DataPoint(2.8, 2),
-                new DataPoint(2.9, 2.2),
-                new DataPoint(3, 2),
-                new DataPoint(3.2, 1.9),
-                new DataPoint(3.8, 1.7),
-                new DataPoint(4, 1.5),
-                new DataPoint(4.1, 1.3),
-                new DataPoint(4.2, 1.2),
-                new DataPoint(4.3, 1.6),
-                new DataPoint(4.4, 1.1),
-                new DataPoint(4.5, 1.5),
-                new DataPoint(4.6, 1.3)
+        s1[1][2]="name";
+        s1[1][3]="name 3";
+        s1[1][4]="name 4";
+        s1[1][5]="name 5";
+        s1[1][6]="name 6";
 
-            });
+        s1[2][2]="name";
+        s1[2][3]="name 3";
+        s1[2][4]="name 4";
+        s1[2][5]="name 5";
+        s1[2][6]="name 6";
 
-            series.setDrawBackground(true);
-            series.setColor(Color.rgb(173,	193	,197));
-            graph.getViewport().setDrawBorder(false);
-            graph.getGridLabelRenderer().setHighlightZeroLines(false);
-            graph.getViewport().setScalable(true);
-            graph.getViewport().setScrollable(true);
-            graph.addSeries(series);
+        s1[3][2]="name";
+        s1[3][3]="name 3";
+        s1[3][4]="name 4";
+        s1[3][5]="name 5";
+        s1[3][6]="name 6";
 
+
+        recyclerView2 = findViewById(R.id.id_recy_pro_2);
+
+        TopUserAdapter topUserAdapter = new TopUserAdapter(PageMainActivity.this,s1);
+        recyclerView2.setAdapter(topUserAdapter);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
 
     }
 
@@ -647,10 +654,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                             float nb_dmd_set =Float.parseFloat(BALANCE);
                             txt_nb_dmd.setText(BALANCE+" DMD");
                             txt_prix.setText("$"+(valeur_set*nb_dmd_set));
-                            txt_valeur.setText(DMD_VALUE);
+                            txt_valeur.setText("$"+DMD_VALUE);
                             NEW_TAUX=Float.parseFloat(DMD_TAUX);
 
-                            float aff_taux=NEW_TAUX-OLD_TAUX;
+                            float aff_taux=OLD_TAUX-NEW_TAUX;
                             txt_taux.setText(aff_taux+"%");
                             select_user(USER_PSEUDO);
                             if(aff_taux < 0){

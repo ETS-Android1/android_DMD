@@ -62,7 +62,7 @@ public class BlpActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String s1[][] ;
 
-    Spinner pays, type_provider;
+    Spinner pays, type_provider,code_pays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +139,7 @@ public class BlpActivity extends AppCompatActivity {
         id_phone = pop_add_view.findViewById(R.id.id_phone);
         pays = pop_add_view.findViewById(R.id.id_pays);
         type_provider = pop_add_view.findViewById(R.id.id_type_provider);
+        code_pays = pop_add_view.findViewById(R.id.id_code_pays);
 
         ArrayList<String> pays_liste = new ArrayList<>();
 
@@ -147,9 +148,9 @@ public class BlpActivity extends AppCompatActivity {
         pays_liste.add("Benin");
         pays_liste.add("Uruguay");
         pays_liste.add("Burkina Faso");
-
         pays.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,pays_liste));
+
 
         ArrayList<String> provider_liste = new ArrayList<>();
 
@@ -157,9 +158,18 @@ public class BlpActivity extends AppCompatActivity {
         provider_liste.add("Seller");
         provider_liste.add("Buyer");
         provider_liste.add("Seller & Buyer");
-
         type_provider.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,provider_liste));
+
+        ArrayList<String> code_pays_liste = new ArrayList<>();
+
+        code_pays_liste.add("243");
+        code_pays_liste.add("228");
+        code_pays_liste.add("229");
+        code_pays_liste.add("230");
+        code_pays.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,code_pays_liste));
+
         pop_cancel= pop_add_view.findViewById(R.id.save2);
         pop_save= pop_add_view.findViewById(R.id.save);
 
@@ -187,15 +197,16 @@ public class BlpActivity extends AppCompatActivity {
 
 
         String txt_pays = pays.getSelectedItem().toString();
+        String txt_code_pays =code_pays.getSelectedItem().toString();
         String txt_ville = id_town.getText().toString();
         String txt_lcl_money = id_lcl_money.getText().toString();
         String txt_type_provider= type_provider.getSelectedItem().toString();
         String txt_phone = id_phone.getText().toString();
 
         if(txt_pays!="Your Country" && txt_ville!=""  && txt_lcl_money!=""
-                && txt_type_provider!= "Type of Provider" && txt_phone!="" ){
+                && txt_type_provider!= "Type of Provider" && txt_phone!="" && txt_code_pays!="" ){
 
-            new BlpActivity.AsyncBLP().execute(txt_pays,txt_ville,txt_lcl_money,txt_type_provider,txt_phone,USER_ACCOUNT_ID,USER_NAME,"blp");
+            new BlpActivity.AsyncBLP().execute(txt_pays,txt_ville,txt_lcl_money,txt_type_provider,txt_code_pays+""+txt_phone,USER_ACCOUNT_ID,USER_NAME,"blp");
 
 
         }
