@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.diamon.Modele.HistoryAdapter;
 import com.example.diamon.Modele.ProviderAdapter;
+import com.example.diamon.Modele.SelectProvider;
+import com.example.diamon.Modele.Select_In_Db;
 import com.example.diamon.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,10 +66,13 @@ public class BlpActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     public String s1[][] ;
+    boolean result = false;
 
     Spinner pays, type_provider,code_pays;
     ShimmerFrameLayout shime;
 
+
+    SelectProvider selectProvider = new SelectProvider();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +84,11 @@ public class BlpActivity extends AppCompatActivity {
 
 
         if(isConnectingToInternet(BlpActivity.this)) {
-            Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
-            select_lp();
+            Toast.makeText(getApplicationContext(), "internet is available", Toast.LENGTH_LONG).show();
+
+            selectProvider.select_lp();
+            check_provider_result();
+
         }
         else {
             Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
@@ -391,20 +400,48 @@ public class BlpActivity extends AppCompatActivity {
     }
 
 
+    public boolean check_provider_result() {
+
+        ProgressDialog providerLoding = new ProgressDialog(BlpActivity.this);
+        providerLoding.setMessage("\tLoading...");
+        providerLoding.setCancelable(false);
+        providerLoding.show();
+
+        if (result == false){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (selectProvider.getS1() == null) {
+                        result = false;
+                        check_provider_result();
+                    } else  { recyclerView = findViewById(R.id.id_provider_recyclerview);
+
+                    ProviderAdapter providerAdapter = new ProviderAdapter(BlpActivity.this,selectProvider.getS1());
+                    recyclerView.setAdapter(providerAdapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(BlpActivity.this));
+                    providerLoding.dismiss();
+                    result = true;
+                    }
+                }
+            }, 1000);
+    }
+    return result;
+
+    }
 
 
 
-    public void select_lp() {
+   // public void select_lp() {
 
         // Initialize  AsyncLogin() class with email and password
         /**
          * valeur a envoyer vers le serveur
          */
-        new BlpActivity.AsyncLcl_P().execute("select_blp");
-    }
+     //   new BlpActivity.AsyncLcl_P().execute("select_blp");
+    //}
 
 
-
+/*
     private class AsyncLcl_P extends AsyncTask<String, String, String>
     {
         ProgressDialog pdLoading = new ProgressDialog(BlpActivity.this);
@@ -515,9 +552,9 @@ public class BlpActivity extends AppCompatActivity {
             Log.d("message du serveur", result);
             if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
             {
-                /* Here launching another activity when login successful. If you persist login state
-                use sharedPreferences of Android. and logout button to clear sharedPreferences.
-                 */
+                // Here launching another activity when login successful. If you persist login state
+                //use sharedPreferences of Android. and logout button to clear sharedPreferences.
+
                 Log.e("result***************************************************************************************************************************" +
                         "", "onPostExecute: "+result);
 
@@ -544,7 +581,7 @@ public class BlpActivity extends AppCompatActivity {
                          *    6->type"
                          */
 
-                        blp_result[i][2] = obj.getString("provider_name");
+                 /*       blp_result[i][2] = obj.getString("provider_name");
                         blp_result[i][3] = obj.getString("number");
                         blp_result[i][4] = obj.getString("pay_agent");
                         blp_result[i][5] = obj.getString("ville_pays");
@@ -572,16 +609,15 @@ public class BlpActivity extends AppCompatActivity {
 
                 Toast.makeText(BlpActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
 
-            }
+            }*/
 
             /**
              *
              *
              */
 
-        }
-    }
-
+     //   }
+ //   }
 
 
 }

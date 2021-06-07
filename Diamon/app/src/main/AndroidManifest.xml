@@ -11,28 +11,29 @@
         android:roundIcon="@drawable/logo_dmd"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diamon">
-
+        <activity android:name=".Vue.ChatActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.GraphActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.RegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.withdrawalActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.ProfileActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.BlpActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.TransactionsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.Account_Setting"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vue.BuyActivity"
             android:screenOrientation="portrait" />
@@ -48,12 +49,11 @@
         <activity
             android:name=".Vue.Splash"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

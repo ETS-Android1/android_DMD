@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:weightSum="8"
+    tools:context=".Vue.ChatActivity">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:background="@drawable/border_set"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <soup.neumorphism.NeumorphCardView
+               style="@style/Widget.Neumorph.CardView"
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:layout_height="match_parent">
+
+
+
+            <ImageView
+                android:id="@+id/id_btn_back"
+               android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="?attr/actionBarSize"
+                android:src="@drawable/ic_back" />
+
+
+        </soup.neumorphism.NeumorphCardView>
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="5.9">
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1">
+
+        <soup.neumorphism.NeumorphCardView
+            style="@style/Widget.Neumorph.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            app:neumorph_shapeType="pressed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="4">
+
+                <EditText
+                    android:id="@+id/id_message"
+                    android:layout_width="0dp"
+                    android:layout_weight="2.9"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="type your message"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/cursor"
+                    android:background="@android:color/transparent" />
+
+                <soup.neumorphism.NeumorphButton
+                    style="@style/Widget.Neumorph.Button"
+                    android:id="@+id/id_btn_send_message"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.1"
+                    app:neumorph_shapeType="flat"
+                    android:drawableRight="@drawable/ic_send_message">
+
+                </soup.neumorphism.NeumorphButton>
+
+            </LinearLayout>
+
+        </soup.neumorphism.NeumorphCardView>
+
+    </LinearLayout>
+
+</LinearLayout>

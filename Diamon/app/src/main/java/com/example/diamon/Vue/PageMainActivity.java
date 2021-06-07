@@ -4,11 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +24,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,6 +40,8 @@ import android.widget.Toolbar;
 
 import com.example.diamon.Modele.HistoryAdapter;
 import com.example.diamon.Modele.ProviderAdapter;
+import com.example.diamon.Modele.SelectProvider;
+import com.example.diamon.Modele.Select_In_Db;
 import com.example.diamon.Modele.TopUserAdapter;
 import com.example.diamon.R;
 import com.google.android.material.navigation.NavigationView;
@@ -78,12 +86,16 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     public static  String USER_NAME="",USER_PSEUDO="",USER_ACCOUNT_ID="",DMD_VALUE="",DMD_TAUX="0", DMD_PRIX="",PWD="";
     public String BALANCE;
     public float OLD_TAUX=0,NEW_TAUX;
+    private NotificationManager mNotificationManager;
 
     RecyclerView recyclerView1,recyclerView2;
     String s1[][] = new String[4][7];
     String s2[][]  = new String[4][7];
     Spinner code_pays;
 
+    boolean provider_result = false;
+    Select_In_Db select_in_db = new Select_In_Db();
+    SelectProvider selectProvider = new SelectProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,12 +169,32 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         navigationView.setNavigationItemSelectedListener(this);
 
         if(isConnectingToInternet(PageMainActivity.this)) {
+            select_in_db.check_version();
+            notif_version();
             Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
             select_user(USER_PSEUDO);
             select_dmd();
-            select_lp();
-            pop_activity();
-            //OLD_TAUX = Float.parseFloat(DMD_TAUX);
+
+            selectProvider.select_lp();
+
+            check_provider_result();
+            //select_lp();
+
+            /**
+             * ATTENDRE 10 SECONDES AVANT DE RECUPERE LE POPUP VERSION
+             */
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(select_in_db.getVersion()!="") {
+                        pop_activity();
+                    }
+                }
+            },10000);
+
+
+           //notif();
+           //OLD_TAUX = Float.parseFloat(DMD_TAUX);
 
         }
         else {
@@ -259,7 +291,11 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.chat:
-                Toast.makeText(this,"chat clicked",Toast.LENGTH_LONG).show();
+                Intent intent_chat = new Intent(PageMainActivity.this, ChatActivity.class);
+                intent_chat.putExtra("user_name",USER_NAME);
+                intent_chat.putExtra("user_pseudo",USER_PSEUDO);
+                intent_chat.putExtra("user_account_id",USER_ACCOUNT_ID);
+                startActivity(intent_chat);
                 break;
 
             case R.id.help:
@@ -499,11 +535,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                //this method will be running on UI thread
-               // pdLoading.setMessage("\tLoading...");
-               // pdLoading.setCancelable(false);
-               // pdLoading.show();
-
             }
 
             @Override
@@ -591,8 +622,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             @Override
             protected void onPostExecute(String result) {
 
-                //this method will be running on UI thread
-                pdLoading.dismiss();
                 Log.d("message du serveur", result);
                 if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
                 {
@@ -722,16 +751,27 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         dialogBuilder = new AlertDialog.Builder(this);
         final View pop_add_view= getLayoutInflater().inflate(R.layout.oncreate_pop,null);
         Button install_btn;
+        TextView txt;
         install_btn = pop_add_view.findViewById(R.id.id_install);
+
+        /**
+         * TXT POUR AFFICHER LE TEXT DU POP UP
+         */
+        txt = pop_add_view.findViewById(R.id.txt);
 
         dialogBuilder.setView(pop_add_view);
         dialog= dialogBuilder.create();
         dialog.show();
 
+
+        String link = select_in_db.getVersion();
+
+       // Toast.makeText(PageMainActivity.this,select_in_db.version,Toast.LENGTH_LONG).show();
+
         install_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open_web("https://moulenetadi.com");
+                open_web(link);
             }
         });
 
@@ -744,199 +784,42 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
      *
      */
 
-    public void select_lp() {
 
-        // Initialize  AsyncLogin() class with email and password
-        /**
-         * valeur a envoyer vers le serveur
-         */
-        new PageMainActivity.AsyncLcl_P().execute("select_blp");
+
+    public boolean check_provider_result() {
+
+        ProgressDialog providerLoding = new ProgressDialog(PageMainActivity.this);
+        providerLoding.setMessage("\tLoading...");
+        providerLoding.setCancelable(false);
+        providerLoding.show();
+
+        if (provider_result == false){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (selectProvider.getS1() == null) {
+                        provider_result = false;
+                        check_provider_result();
+                    } else  {
+                        recyclerView2 = findViewById(R.id.id_recy_pro_2);
+
+
+                        ProviderAdapter providerAdapter = new ProviderAdapter(PageMainActivity.this,selectProvider.getS1());
+                        recyclerView2.setAdapter(providerAdapter);
+                        recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
+
+                        providerLoding.dismiss();
+                        provider_result = true;
+                    }
+                }
+            }, 1000);
+        }
+        return provider_result;
+
     }
 
 
-    private class AsyncLcl_P extends AsyncTask<String, String, String>
-    {
-        ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
-        HttpURLConnection conn;
-        URL url = null;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                // Enter URL address where your php file resides
-                url = new URL(URL_MAIN);
-                Log.d("connection" ,"doInBackground:*************************************************** ");
-
-            } catch (MalformedURLException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return "exception";
-            }
-            try {
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection)url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("POST");
-
-                // setDoInput and setDoOutput method depict handling of both send and receive
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                // Append parameters to URL
-                // post name and value param
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("select_blp", params[0]);
-
-                String query = builder.build().getEncodedQuery();
-
-                // Open connection for sending data
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
-
-            } catch (IOException e1)
-            {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return "exception";
-            }
-            try {
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    // Pass data to onPostExecute method
-                    return(result.toString());
-
-                }else{
-
-                    return("unsuccessful");
-                }
-
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-                return "exception";
-            }
-            finally {
-                conn.disconnect();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            //this method will be running on UI thread
-            pdLoading.dismiss();
-            //shime.setVisibility(View.GONE);
-
-            Log.d("message du serveur", result);
-            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
-            {
-                /* Here launching another activity when login successful. If you persist login state
-                use sharedPreferences of Android. and logout button to clear sharedPreferences.
-                 */
-                Log.e("result***************************************************************************************************************************" +
-                        "", "onPostExecute: "+result);
-
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String[][] blp_result = new String[jsonArray.length()][7];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject obj = null;
-                    try {
-                        obj = jsonArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        /**   1->
-                         *    2-> provider_name;
-                         *    3-> number
-                         *    4->pay_agent
-                         *    5->ville_pays
-                         *    6->type"
-                         */
-
-                        blp_result[i][2] = obj.getString("provider_name");
-                        blp_result[i][3] = obj.getString("number");
-                        blp_result[i][4] = obj.getString("pay_agent");
-                        blp_result[i][5] = obj.getString("ville_pays");
-                        blp_result[i][6] = obj.getString("type");
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                recyclerView2 = findViewById(R.id.id_recy_pro_2);
-
-                s1 = blp_result;
-                ProviderAdapter providerAdapter = new ProviderAdapter(PageMainActivity.this,s1);
-                recyclerView2.setAdapter(providerAdapter);
-                recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
-
-
-
-
-
-
-
-
-
-            }else if (result.equalsIgnoreCase("false"))
-            {
-                Log.e("probleme***************************************************************************************************************************" +
-                        "", "onPostExecute: un probleme");
-            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
-
-                Toast.makeText(PageMainActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
-
-            }
-
-            /**
-             *
-             *
-             */
-
-        }
-    }
 
     /**
      * FONCTION POUR OUVRIR UN LIEN
@@ -947,4 +830,47 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         Intent webIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(link));
         startActivity(webIntent);
     }
+
+
+
+
+    public void notif_version(){
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "notify_001");
+        Intent intent_by_notif = new Intent(getApplicationContext().getApplicationContext(),PageMainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent_by_notif, 0);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        //bigText.bigText( "jojo");
+        // bigText.setBigContentTitle("Today's Bible Verse");
+        // bigText.setSummaryText("Text in detail");
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setSmallIcon(R.drawable.logo_dmd);
+        mBuilder.setContentTitle("New message");
+        mBuilder.setContentText("Receive dmd from...");
+        mBuilder.setPriority(Notification.PRIORITY_MAX);
+        // mBuilder.setStyle(bigText);
+
+        mNotificationManager =
+                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // === Removed some obsoletes
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "Your_channel_id";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
+        Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
+
+    }
+
+
 }

@@ -24,7 +24,7 @@
         android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="new version available "
+        android:text="A new version is available"
         android:textColor="#5C5E5C"
         android:textSize="20dp"
         android:gravity="center"
@@ -41,34 +41,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="0.57"
-        >
+        app:layout_constraintVertical_bias="0.57">
 
-        <!-- <Button
-             android:id="@+id/id_buy_d"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginRight="4dp"
-             android:layout_weight="1"
-             android:text="Direct Buy"
-             android:textColor="@color/white"
-             app:backgroundTint="#DD181919" />-->
 
         <Button
             android:id="@+id/id_install"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:text="Install nown"
+            android:text="Install now"
             android:textColor="@color/white"
             app:backgroundTint="#DD181919" />
 
