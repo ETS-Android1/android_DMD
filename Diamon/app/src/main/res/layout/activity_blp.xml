@@ -93,6 +93,7 @@
             android:layout_height="0dp"
             android:layout_weight="5">
 
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/id_add_blp"
                 android:layout_width="wrap_content"

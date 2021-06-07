@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.diamon.Modele.HistoryAdapter;
 import com.example.diamon.Modele.ProviderAdapter;
 import com.example.diamon.R;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -60,9 +61,11 @@ public class BlpActivity extends AppCompatActivity {
 
     EditText id_town, id_lcl_money,id_phone;
     RecyclerView recyclerView;
-    String s1[][] ;
+
+    public String s1[][] ;
 
     Spinner pays, type_provider,code_pays;
+    ShimmerFrameLayout shime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,8 @@ public class BlpActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_blp);
+
+
 
 
         if(isConnectingToInternet(BlpActivity.this)) {
@@ -389,18 +394,6 @@ public class BlpActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     public void select_lp() {
 
         // Initialize  AsyncLogin() class with email and password
@@ -517,6 +510,8 @@ public class BlpActivity extends AppCompatActivity {
 
             //this method will be running on UI thread
             pdLoading.dismiss();
+            //shime.setVisibility(View.GONE);
+
             Log.d("message du serveur", result);
             if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
             {
@@ -562,6 +557,7 @@ public class BlpActivity extends AppCompatActivity {
                 }
 
                 recyclerView = findViewById(R.id.id_provider_recyclerview);
+
                 s1 = blp_result;
                 ProviderAdapter providerAdapter = new ProviderAdapter(BlpActivity.this,s1);
                 recyclerView.setAdapter(providerAdapter);

@@ -160,14 +160,14 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
             select_user(USER_PSEUDO);
             select_dmd();
+            select_lp();
+            pop_activity();
             //OLD_TAUX = Float.parseFloat(DMD_TAUX);
-
 
         }
         else {
             Toast.makeText(getApplicationContext(),"Your are not connected ",Toast.LENGTH_LONG).show();
         }
-
 
         /**
          *    1->
@@ -178,38 +178,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
          *    6->type"
          */
 
-        s1[0][2]="name";
-        s1[0][3]="name 3";
-        s1[0][4]="name 4";
-        s1[0][5]="name 5";
-        s1[0][6]="name 6";
-
-        s1[1][2]="name";
-        s1[1][3]="name 3";
-        s1[1][4]="name 4";
-        s1[1][5]="name 5";
-        s1[1][6]="name 6";
-
-        s1[2][2]="name";
-        s1[2][3]="name 3";
-        s1[2][4]="name 4";
-        s1[2][5]="name 5";
-        s1[2][6]="name 6";
-
-        s1[3][2]="name";
-        s1[3][3]="name 3";
-        s1[3][4]="name 4";
-        s1[3][5]="name 5";
-        s1[3][6]="name 6";
-
-
-        recyclerView2 = findViewById(R.id.id_recy_pro_2);
-
-        TopUserAdapter topUserAdapter = new TopUserAdapter(PageMainActivity.this,s1);
-        recyclerView2.setAdapter(topUserAdapter);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
 
     }
+
+
 
         public void actualiser(){
 
@@ -740,4 +712,239 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     }
 
 
+    /**
+     * POP UP ONCREATE
+     *
+     */
+
+    public void pop_activity(){
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View pop_add_view= getLayoutInflater().inflate(R.layout.oncreate_pop,null);
+        Button install_btn;
+        install_btn = pop_add_view.findViewById(R.id.id_install);
+
+        dialogBuilder.setView(pop_add_view);
+        dialog= dialogBuilder.create();
+        dialog.show();
+
+        install_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_web("https://moulenetadi.com");
+            }
+        });
+
+    }
+
+
+
+    /**
+     * SELECTION DES INFOS PROVIDER
+     *
+     */
+
+    public void select_lp() {
+
+        // Initialize  AsyncLogin() class with email and password
+        /**
+         * valeur a envoyer vers le serveur
+         */
+        new PageMainActivity.AsyncLcl_P().execute("select_blp");
+    }
+
+
+    private class AsyncLcl_P extends AsyncTask<String, String, String>
+    {
+        ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+            pdLoading.setMessage("\tLoading...");
+            pdLoading.setCancelable(false);
+            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your php file resides
+                url = new URL(URL_MAIN);
+                Log.d("connection" ,"doInBackground:*************************************************** ");
+
+            } catch (MalformedURLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return "exception";
+            }
+            try {
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection)url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("POST");
+
+                // setDoInput and setDoOutput method depict handling of both send and receive
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                // Append parameters to URL
+                // post name and value param
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("select_blp", params[0]);
+
+                String query = builder.build().getEncodedQuery();
+
+                // Open connection for sending data
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                conn.connect();
+
+            } catch (IOException e1)
+            {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return "exception";
+            }
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return(result.toString());
+
+                }else{
+
+                    return("unsuccessful");
+                }
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                return "exception";
+            }
+            finally {
+                conn.disconnect();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+            pdLoading.dismiss();
+            //shime.setVisibility(View.GONE);
+
+            Log.d("message du serveur", result);
+            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
+            {
+                /* Here launching another activity when login successful. If you persist login state
+                use sharedPreferences of Android. and logout button to clear sharedPreferences.
+                 */
+                Log.e("result***************************************************************************************************************************" +
+                        "", "onPostExecute: "+result);
+
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String[][] blp_result = new String[jsonArray.length()][7];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject obj = null;
+                    try {
+                        obj = jsonArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        /**   1->
+                         *    2-> provider_name;
+                         *    3-> number
+                         *    4->pay_agent
+                         *    5->ville_pays
+                         *    6->type"
+                         */
+
+                        blp_result[i][2] = obj.getString("provider_name");
+                        blp_result[i][3] = obj.getString("number");
+                        blp_result[i][4] = obj.getString("pay_agent");
+                        blp_result[i][5] = obj.getString("ville_pays");
+                        blp_result[i][6] = obj.getString("type");
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                recyclerView2 = findViewById(R.id.id_recy_pro_2);
+
+                s1 = blp_result;
+                ProviderAdapter providerAdapter = new ProviderAdapter(PageMainActivity.this,s1);
+                recyclerView2.setAdapter(providerAdapter);
+                recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
+
+
+
+
+
+
+
+
+
+            }else if (result.equalsIgnoreCase("false"))
+            {
+                Log.e("probleme***************************************************************************************************************************" +
+                        "", "onPostExecute: un probleme");
+            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
+
+                Toast.makeText(PageMainActivity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
+
+            }
+
+            /**
+             *
+             *
+             */
+
+        }
+    }
+
+    /**
+     * FONCTION POUR OUVRIR UN LIEN
+     *
+     */
+
+    public void open_web(String link){
+        Intent webIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(link));
+        startActivity(webIntent);
+    }
 }
