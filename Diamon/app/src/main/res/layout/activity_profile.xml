@@ -34,7 +34,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profil_img"
             android:layout_height="100dp"
-            android:src="@drawable/ic_account"
+            android:src="@drawable/prof"
             android:layout_width="100dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -103,6 +103,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:weightSum="6"
             android:background="@drawable/color_unset_pseudo"
             >
@@ -140,6 +141,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:weightSum="6"
             android:background="@drawable/border_raduis"
             >
@@ -170,6 +172,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:weightSum="6"
             android:background="@drawable/border_raduis"
             >
@@ -201,6 +204,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:weightSum="6"
             android:background="@drawable/border_raduis"
             >
@@ -232,6 +236,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
             android:weightSum="6"
             android:background="@drawable/border_raduis"
             >

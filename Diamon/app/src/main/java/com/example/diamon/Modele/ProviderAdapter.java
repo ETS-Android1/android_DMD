@@ -26,6 +26,8 @@ import com.example.diamon.Vue.SendActivity;
 import com.example.diamon.Vue.TransactionsActivity;
 import com.example.diamon.Vue.withdrawalActivity;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyViewHolder> {
     public AlertDialog.Builder dialogBuilder;
     public AlertDialog dialog;
@@ -69,7 +71,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
                if(position==2){
                holder.rank.setImageResource(R.drawable.t);
                 }else{
-                   holder.rank.setVisibility(View.GONE);
+                  // holder.rank.setVisibility(View.GONE);
                }
            }
        }
@@ -79,6 +81,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
 
             case  "Togo":
                 holder.imageView.setImageResource(R.drawable.flag_togo);
+                holder.type_img.setImageResource(R.drawable.prof);
                 break;
 
             case "Benin":
@@ -132,6 +135,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
     public class MyViewHolder extends  RecyclerView.ViewHolder{
 
         TextView txt_name, txt_type,txt_lcl_pay;
+        CircleImageView type_img;
         ImageView imageView,rank;
         ConstraintLayout p_layout;
 
@@ -143,6 +147,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
             imageView = itemView.findViewById(R.id.id_flag);
             p_layout= itemView.findViewById(R.id.id_layout);
             rank = itemView.findViewById(R.id.id_rank);
+            type_img = itemView.findViewById(R.id.id_type_img);
 
 
         }

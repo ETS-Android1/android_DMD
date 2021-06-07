@@ -125,8 +125,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 pop_buy();
-                //Intent intent = new Intent(PageMainActivity.this, BuyActivity.class);
-                //startActivity(intent);
             }
         });
 
@@ -354,7 +352,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
         private class AsyncUser extends AsyncTask<String, String, String>
         {
-        ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
         HttpURLConnection conn;
         URL url = null;
 
@@ -362,10 +359,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         protected void onPreExecute() {
             super.onPreExecute();
 
-            //this method will be running on UI thread
-            //pdLoading.setMessage("\tLoading...");
-           // pdLoading.setCancelable(false);
-            //pdLoading.show();
 
         }
 
@@ -455,8 +448,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         @Override
         protected void onPostExecute(String result) {
 
-            //this method will be running on UI thread
-            pdLoading.dismiss();
             Log.d("message du serveur", result);
             if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
             {
@@ -527,7 +518,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
         private class AsyncDMD extends AsyncTask<String, String, String>
         {
-            ProgressDialog pdLoading = new ProgressDialog(PageMainActivity.this);
+
             HttpURLConnection conn;
             URL url = null;
 
@@ -718,14 +709,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         dialog= dialogBuilder.create();
         dialog.show();
 
-       /* buy_d.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_deposit = new Intent(PageMainActivity.this, BuyActivity.class);
-                startActivity(intent_deposit);
-            }
-        });*/
-
         buy_provider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -788,11 +771,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
     public boolean check_provider_result() {
 
-        ProgressDialog providerLoding = new ProgressDialog(PageMainActivity.this);
-        providerLoding.setMessage("\tLoading...");
-        providerLoding.setCancelable(false);
-        providerLoding.show();
-
         if (provider_result == false){
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -808,7 +786,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                         recyclerView2.setAdapter(providerAdapter);
                         recyclerView2.setLayoutManager(new LinearLayoutManager(PageMainActivity.this));
 
-                        providerLoding.dismiss();
                         provider_result = true;
                     }
                 }
@@ -841,16 +818,12 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent_by_notif, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        //bigText.bigText( "jojo");
-        // bigText.setBigContentTitle("Today's Bible Verse");
-        // bigText.setSummaryText("Text in detail");
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.drawable.logo_dmd);
         mBuilder.setContentTitle("New message");
         mBuilder.setContentText("Receive dmd from...");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
-        // mBuilder.setStyle(bigText);
 
         mNotificationManager =
                 (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

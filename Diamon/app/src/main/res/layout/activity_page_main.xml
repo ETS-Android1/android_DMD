@@ -21,14 +21,14 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/neuwhite"
+            android:background="@drawable/bg1"
             android:orientation="vertical"
             android:weightSum="10">
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:background="@drawable/border_set"
             android:orientation="horizontal"
             android:weightSum="6">
@@ -59,6 +59,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1.5"
+            android:gravity="right"
+            android:layout_marginRight="5dp"
             android:layout_height="match_parent">
 
             <ImageView
@@ -73,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
+                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:text="0"/>
 
@@ -96,7 +99,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/neuwhite">
+            android:background="#4B088DDA">
 
             <TextView
                 android:id="@+id/textView"
@@ -187,7 +190,7 @@
                 android:text="Graph"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:neumorph_shapeType="basin" />
+                app:neumorph_shapeType="flat" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -195,30 +198,6 @@
 
         </soup.neumorphism.NeumorphCardView>
 
-        <!--
-        <soup.neumorphism.NeumorphCardView
-            style="@style/Widget.Neumorph.ImageView"
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            app:neumorph_shapeType="flat"
-            >
-           <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               android:background="#D5DFF3"
-                android:id="@+id/graph"/>
-
-   <com.github.mikephil.charting.charts.LineChart
-        <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:id="@+id/graph"/>
-   </soup.neumorphism.NeumorphCardView>-->
 
     <LinearLayout
         android:id="@+id/sell_buy"
@@ -265,12 +244,12 @@
             android:layout_margin="5dp"
             android:text="Top Users"
             android:textStyle="bold"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/id_recy_pro_2"
             android:layout_width="match_parent"
-            android:layout_weight="4.5"
+            android:layout_weight="4.6"
             android:layout_height="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"

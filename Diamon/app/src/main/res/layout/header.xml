@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#C1BDBD"
+    android:background="@drawable/bg2"
     android:gravity="center"
     android:layout_height="200dp"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profil_img"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_account"
-        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:src="@drawable/prof"
+        android:layout_width="200dp"
        />
 
     <TextView
@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="John Doe"
+        android:layout_marginTop="5dp"
         android:textSize="20dp"/>
 
 
