@@ -55,13 +55,16 @@ public class SelectProvider {
 
 
 
-    public void select_lp() {
+    public void select_lp(String query) {
 
         // Initialize  AsyncLogin() class with email and password
         /**
          * valeur a envoyer vers le serveur
          */
-        new SelectProvider.AsyncLcl_P().execute("select_blp");
+        if(query!=""){
+            new SelectProvider.AsyncLcl_P().execute("select_blp",query);
+        }else{
+        new SelectProvider.AsyncLcl_P().execute("select_blp","");}
     }
 
 
@@ -106,7 +109,8 @@ public class SelectProvider {
                 // Append parameters to URL
                 // post name and value param
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("select_blp", params[0]);
+                        .appendQueryParameter("select_blp", params[0])
+                        .appendQueryParameter("query", params[1]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -169,13 +173,12 @@ public class SelectProvider {
             //shime.setVisibility(View.GONE);
 
             Log.d("message du serveur", result);
-            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception"))
-            {
+            if(result!="" && !result.equalsIgnoreCase("false")  && !result.equalsIgnoreCase("exception")) {
                 /* Here launching another activity when login successful. If you persist login state
                 use sharedPreferences of Android. and logout button to clear sharedPreferences.
                  */
                 Log.e("result***************************************************************************************************************************" +
-                        "", "onPostExecute: "+result);
+                        "", "onPostExecute: " + result);
 
                 JSONArray jsonArray = null;
                 try {
@@ -183,7 +186,9 @@ public class SelectProvider {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String[][] blp_result = new String[jsonArray.length()][7];
+
+                if(jsonArray!=null){
+                String[][] blp_result = new String[jsonArray.length()][8];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = null;
                     try {
@@ -198,6 +203,7 @@ public class SelectProvider {
                          *    4->pay_agent
                          *    5->ville_pays
                          *    6->type"
+                         *    7->cetification"
                          */
 
                         blp_result[i][2] = obj.getString("provider_name");
@@ -205,6 +211,7 @@ public class SelectProvider {
                         blp_result[i][4] = obj.getString("pay_agent");
                         blp_result[i][5] = obj.getString("ville_pays");
                         blp_result[i][6] = obj.getString("type");
+                        blp_result[i][7] = obj.getString("certifie");
 
 
                     } catch (JSONException e) {
@@ -212,10 +219,14 @@ public class SelectProvider {
                     }
                 }
 
-                    setS1(blp_result);
+                setS1(blp_result);
+            }else{
 
+                }
             }else if (result.equalsIgnoreCase("false"))
             {
+
+
                 Log.e("probleme***************************************************************************************************************************" +
                         "", "onPostExecute: un probleme");
             } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {

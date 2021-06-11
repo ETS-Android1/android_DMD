@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/neuwhite"
+    android:background="@drawable/splash_dmd"
     tools:context=".Vue.Splash">
 
-    <pl.droidsonroids.gif.GifImageView
+   <!-- <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/dmd"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

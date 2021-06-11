@@ -43,7 +43,7 @@
                     android:id="@+id/id_type_img"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_account" />
+                    android:src="@drawable/ic_r_prof" />
 
             </LinearLayout>
 
@@ -70,7 +70,8 @@
                 android:layout_marginTop="11dp"
                 android:src="@drawable/ic_sucess"
                 app:layout_constraintStart_toEndOf="@+id/id_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/id_flag"
@@ -79,7 +80,7 @@
                 android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/flag_togo" />
+                android:src="@drawable/flag_ue" />
 
             <TextView
                 android:id="@+id/id_type"

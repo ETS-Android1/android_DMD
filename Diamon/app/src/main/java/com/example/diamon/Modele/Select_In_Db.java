@@ -37,7 +37,7 @@ public class Select_In_Db {
     public String BALANCE;
 
 
-    public String version;
+    public String version="";
 
 
     public void setVersion(String v) {

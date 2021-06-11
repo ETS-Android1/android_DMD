@@ -18,23 +18,24 @@
         android:orientation="horizontal"
         android:weightSum="6">
 
-        <soup.neumorphism.NeumorphCardView
+       <!-- <soup.neumorphism.NeumorphCardView
                style="@style/Widget.Neumorph.CardView"
             android:layout_width="0dp"
             android:layout_weight="1.2"
             android:layout_height="match_parent">
-
+-->
 
 
             <ImageView
                 android:id="@+id/id_btn_back"
-               android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:layout_height="match_parent"
                 android:minHeight="?attr/actionBarSize"
                 android:src="@drawable/ic_back" />
 
 
-        </soup.neumorphism.NeumorphCardView>
+     <!--   </soup.neumorphism.NeumorphCardView>-->
     </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"

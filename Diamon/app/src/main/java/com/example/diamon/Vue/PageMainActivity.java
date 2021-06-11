@@ -1,3 +1,4 @@
+
 package com.example.diamon.Vue;
 
 import androidx.annotation.NonNull;
@@ -74,7 +75,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     public AlertDialog.Builder dialogBuilder;
     public AlertDialog dialog;
     private Button buy_d, buy_provider;
-    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur,txt_old,txt_new,txt_nb_dmd;
+    TextView txt_user_pseudo,txt_taux,txt_prix,txt_valeur,txt_old,txt_new,txt_nb_dmd,txt_account_id;
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
     public static final String URL_MAIN ="http://192.168.1.120/dmd/dmd_work.php";
@@ -92,6 +93,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     String s1[][] = new String[4][7];
     String s2[][]  = new String[4][7];
     Spinner code_pays;
+    String le_link="";
 
     boolean provider_result = false;
     Select_In_Db select_in_db = new Select_In_Db();
@@ -113,7 +115,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         // toolbar = findViewById(R.id.toolbar);
         btn_sell = findViewById(R.id.btn_sell);
         btn_buy = findViewById(R.id.btn_buy);
+        btn_graph = findViewById(R.id.btn_graph);
         txt_user_pseudo = header.findViewById(R.id.id_user_pseudo);
+        txt_account_id  = header.findViewById(R.id.id_id_account);
         txt_taux= findViewById(R.id.id_taux);
         txt_valeur= findViewById(R.id.id_valeur);
         txt_nb_dmd= findViewById(R.id.id_nb_dmd);
@@ -128,6 +132,13 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        btn_graph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent webIntent1 = new Intent(Intent.ACTION_VIEW,Uri.parse("https://cryptoast.fr/cours-diamond-77.html"));
+                startActivity(webIntent1);
+            }
+        });
         /**
          * btn_sell
          */
@@ -135,10 +146,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         btn_sell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Drawable img = txt_taux.getContext().getResources().getDrawable( R.drawable.ic_trend_down );
-                txt_taux.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
-                txt_taux.setText(" -8%");
-                txt_taux.setTextColor(getResources().getColor(R.color.red1));
+                pop_buy();
             }
         });
 
@@ -168,17 +176,14 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
         if(isConnectingToInternet(PageMainActivity.this)) {
             select_in_db.check_version();
-            notif_version();
             Toast.makeText(getApplicationContext(),"internet is available", Toast.LENGTH_LONG).show();
             select_user(USER_PSEUDO);
             select_dmd();
 
-            selectProvider.select_lp();
+            selectProvider.select_lp("");
 
             check_provider_result();
-            //select_lp();
-
-            /**
+        /**
              * ATTENDRE 10 SECONDES AVANT DE RECUPERE LE POPUP VERSION
              */
             new Handler().postDelayed(new Runnable() {
@@ -189,10 +194,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                     }
                 }
             },10000);
-
-
-           //notif();
-           //OLD_TAUX = Float.parseFloat(DMD_TAUX);
 
         }
         else {
@@ -261,10 +262,10 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent_send);
                 break;
 
-            case R.id.withdrawal:
+            /*case R.id.withdrawal:
                 Intent intent_wi = new Intent(PageMainActivity.this, withdrawalActivity.class);
                 startActivity(intent_wi);
-                break;
+                break;*/
 
             case R.id.setting:
                 Intent intent_tran = new Intent(PageMainActivity.this, TransactionsActivity.class);
@@ -288,13 +289,13 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent_profile);
                 break;
 
-            case R.id.chat:
+           /* case R.id.chat:
                 Intent intent_chat = new Intent(PageMainActivity.this, ChatActivity.class);
                 intent_chat.putExtra("user_name",USER_NAME);
                 intent_chat.putExtra("user_pseudo",USER_PSEUDO);
                 intent_chat.putExtra("user_account_id",USER_ACCOUNT_ID);
                 startActivity(intent_chat);
-                break;
+                break;*/
 
             case R.id.help:
                 Toast.makeText(this,"help clicked",Toast.LENGTH_LONG).show();
@@ -478,6 +479,7 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
                         USER_ACCOUNT_ID=obj.getString("account_id");
                         BALANCE=obj.getString("nb_dmd");
                         txt_user_pseudo.setText(USER_NAME);
+                        txt_account_id.setText("ACCOUNT ID "+USER_ACCOUNT_ID);
                         //Toast.makeText(PageMainActivity.this,USER_ACCOUNT_ID+" "+USER_NAME+" "+USER_PSEUDO,Toast.LENGTH_LONG).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -748,6 +750,9 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
 
         String link = select_in_db.getVersion();
+        le_link= link;
+        if(le_link!=""){
+        notif_version(le_link);}
 
        // Toast.makeText(PageMainActivity.this,select_in_db.version,Toast.LENGTH_LONG).show();
 
@@ -796,8 +801,6 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-
-
     /**
      * FONCTION POUR OUVRIR UN LIEN
      *
@@ -811,18 +814,19 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
 
 
 
-    public void notif_version(){
+    public void notif_version(String lien){
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "notify_001");
-        Intent intent_by_notif = new Intent(getApplicationContext().getApplicationContext(),PageMainActivity.class);
+       // Intent intent_by_notif = new Intent(getApplicationContext().getApplicationContext(),PageMainActivity.class);
+        Intent intent_by_notif  = new Intent(Intent.ACTION_VIEW,Uri.parse(lien));
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent_by_notif, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.drawable.logo_dmd);
-        mBuilder.setContentTitle("New message");
-        mBuilder.setContentText("Receive dmd from...");
+        mBuilder.setContentTitle("New Version Available");
+        mBuilder.setContentText("Update now");
         mBuilder.setPriority(Notification.PRIORITY_MAX);
 
         mNotificationManager =
@@ -841,7 +845,8 @@ public class PageMainActivity extends AppCompatActivity implements NavigationVie
         }
 
         mNotificationManager.notify(0, mBuilder.build());
-        Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),"hello",Toast.LENGTH_LONG).show();
+
 
     }
 

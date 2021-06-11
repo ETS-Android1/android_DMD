@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bg2"
+    android:background="@color/neuwhite"
     android:gravity="center"
-    android:layout_height="200dp"
+    android:layout_height="180dp"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profil_img"
-        android:layout_height="150dp"
-        android:src="@drawable/prof"
-        android:layout_width="200dp"
-       />
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:src="@drawable/r_dmd_logo"
+      />
 
     <TextView
         android:id="@+id/id_user_pseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="John Doe"
-        android:layout_marginTop="5dp"
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
 
+    <TextView
+        android:id="@+id/id_id_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACCOUNT ID"
+        android:textIsSelectable="true"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
 </LinearLayout>

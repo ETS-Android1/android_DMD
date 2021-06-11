@@ -34,7 +34,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profil_img"
             android:layout_height="100dp"
-            android:src="@drawable/prof"
+            android:src="@drawable/ic_r_prof"
             android:layout_width="100dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
@@ -161,6 +161,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4.4"
                 android:ems="10"
+                android:hint="+00 00010203"
                 android:inputType="phone"
                 android:background="@android:color/transparent"
                 />
@@ -193,6 +194,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4.4"
                 android:ems="10"
+                android:hint="YourMail@exemple.com"
                 android:inputType="textEmailAddress"
                 android:background="@android:color/transparent"
                 />
@@ -225,6 +227,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4.4"
                 android:ems="10"
+                android:hint="Country"
                 android:inputType="text"
                 android:background="@android:color/transparent"
                 />
@@ -257,6 +260,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="4.4"
                 android:ems="10"
+                android:hint="Local Mobile Money"
                 android:inputType="text"
                 android:background="@android:color/transparent"
                 />

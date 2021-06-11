@@ -20,7 +20,7 @@
     </string-array>
 
     <string name="nav_open"> Open</string>
-    <string name="txt_provider">it will be easier for you to pay DMD via a local provider if you do not have access to our online payment services</string>
+    <string name="txt_provider">it will be easier for you to Buy/Sell DMD via a local provider if you do not have access to our online payment services</string>
     <string name="nav_close">Close</string>
     <string name="title_activity_transactions">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>

@@ -99,7 +99,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#4B088DDA">
+            android:background="@color/neuwhite">
 
             <TextView
                 android:id="@+id/textView"
@@ -229,31 +229,29 @@
             android:textColor="@color/red1" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4.7"
-        android:orientation="vertical"
-        android:weightSum="5">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
             android:text="Top Users"
             android:textStyle="bold"
             android:layout_gravity="right"
-           />
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.9"
+        android:orientation="vertical"
+        android:weightSum="5">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/id_recy_pro_2"
             android:layout_width="match_parent"
-            android:layout_weight="4.6"
+            android:layout_weight="5"
             android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:weightSum="4"/>
+           />
 
 
     </LinearLayout>
